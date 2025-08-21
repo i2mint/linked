@@ -1,0 +1,4 @@
+linked.util
+===========
+.. automodule:: linked.util
+   :members:

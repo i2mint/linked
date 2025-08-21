@@ -1,0 +1,8 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/linked
+   module_docs/linked/datasrc
+   module_docs/linked/datasrc/minidot
+   module_docs/linked/util

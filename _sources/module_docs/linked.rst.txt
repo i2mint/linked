@@ -1,0 +1,4 @@
+linked
+======
+.. automodule:: linked
+   :members:
