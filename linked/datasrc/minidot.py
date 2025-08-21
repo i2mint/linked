@@ -12,23 +12,23 @@ from types import SimpleNamespace
 from dol import Pipe
 
 DFLT_FIELD_NAMES = {
-    'id': 'id',
-    'nodes': 'nodes',
-    'links': 'links',
-    'source': 'source',
-    'target': 'target',
+    "id": "id",
+    "nodes": "nodes",
+    "links": "links",
+    "source": "source",
+    "target": "target",
 }
 
-comment_marker = r'#'
-to_and_from_nodes_sep = '->'
-node_regular_expression = r'\w+'
+comment_marker = r"#"
+to_and_from_nodes_sep = "->"
+node_regular_expression = r"\w+"
 
 iterize = lambda func: partial(map, func)
 
 remove_comments = Pipe(
-    re.compile(f'[^{comment_marker}]*').match, methodcaller('group', 0)
+    re.compile(f"[^{comment_marker}]*").match, methodcaller("group", 0)
 )
-split_to_and_from_nodes = methodcaller('split', to_and_from_nodes_sep)
+split_to_and_from_nodes = methodcaller("split", to_and_from_nodes_sep)
 extract_nodes = re.compile(node_regular_expression).findall
 
 process_one_line = Pipe(
