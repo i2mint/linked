@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>linked.datasrc.minidot &mdash; linked 0.0.2 documentation</title>
+  <title>linked.datasrc.minidot &mdash; linked 0.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=e3a6060d"></script>
+      <script src="../../../_static/documentation_options.js?v=282f96c0"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -49,6 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked.html">linked</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/util.html">linked.util</a></li>
 </ul>
 
@@ -84,30 +87,30 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">methodcaller</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">chain</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleNamespace</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipe</span>
 
 <span class="n">DFLT_FIELD_NAMES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;nodes&#39;</span><span class="p">:</span> <span class="s1">&#39;nodes&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="s1">&#39;links&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="s2">&quot;nodes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;links&quot;</span><span class="p">:</span> <span class="s2">&quot;links&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">comment_marker</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;#&#39;</span>
-<span class="n">to_and_from_nodes_sep</span> <span class="o">=</span> <span class="s1">&#39;-&gt;&#39;</span>
-<span class="n">node_regular_expression</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\w+&#39;</span>
+<span class="n">comment_marker</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;#&quot;</span>
+<span class="n">to_and_from_nodes_sep</span> <span class="o">=</span> <span class="s2">&quot;-&gt;&quot;</span>
+<span class="n">node_regular_expression</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\w+&quot;</span>
 
 <span class="n">iterize</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">func</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="nb">map</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
 <span class="n">remove_comments</span> <span class="o">=</span> <span class="n">Pipe</span><span class="p">(</span>
-    <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[^</span><span class="si">{</span><span class="n">comment_marker</span><span class="si">}</span><span class="s1">]*&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="n">methodcaller</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[^</span><span class="si">{</span><span class="n">comment_marker</span><span class="si">}</span><span class="s2">]*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="n">methodcaller</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="n">split_to_and_from_nodes</span> <span class="o">=</span> <span class="n">methodcaller</span><span class="p">(</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="n">to_and_from_nodes_sep</span><span class="p">)</span>
+<span class="n">split_to_and_from_nodes</span> <span class="o">=</span> <span class="n">methodcaller</span><span class="p">(</span><span class="s2">&quot;split&quot;</span><span class="p">,</span> <span class="n">to_and_from_nodes_sep</span><span class="p">)</span>
 <span class="n">extract_nodes</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">node_regular_expression</span><span class="p">)</span><span class="o">.</span><span class="n">findall</span>
 
 <span class="n">process_one_line</span> <span class="o">=</span> <span class="n">Pipe</span><span class="p">(</span>

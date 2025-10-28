@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.datasrc.vectors &mdash; linked 0.0.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=282f96c0"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">linked.datasrc.vectors</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for linked.datasrc.vectors</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Graph construction from high-dimensional vector data.</span>
+
+<span class="sd">This module provides tools to convert point/vector data into graph data (links/edges)</span>
+<span class="sd">suitable for network analysis and visualization. Focus is on sparse graph construction</span>
+<span class="sd">from large datasets (50K-500K points) with high dimensionality (up to 3000+ dimensions).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdist</span><span class="p">,</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">squareform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse.csgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimum_spanning_tree</span><span class="p">,</span> <span class="n">connected_components</span>
+
+
+<span class="c1"># Optional imports with graceful degradation</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestNeighbors</span>
+    <span class="n">_has_sklearn</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">_has_sklearn</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;scikit-learn not available. Some features may be limited.&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pynndescent</span><span class="w"> </span><span class="kn">import</span> <span class="n">NNDescent</span>
+    <span class="n">_has_pynndescent</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">_has_pynndescent</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;pynndescent not available. Approximate methods will fall back to exact.&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">knn_graph</span><span class="p">(</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span><span class="p">,</span>
+    <span class="n">include_self</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct a k-nearest neighbors graph from vectors.</span>
+<span class="sd">    </span>
+<span class="sd">    Each point is connected to its k nearest neighbors. Returns sparse edge list</span>
+<span class="sd">    with optional distance weights.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: Input data of shape (n_samples, n_features)</span>
+<span class="sd">        n_neighbors: Number of neighbors for each sample</span>
+<span class="sd">        metric: Distance metric (euclidean, manhattan, cosine, etc.)</span>
+<span class="sd">        mode: &#39;connectivity&#39; returns binary edges, &#39;distance&#39; returns weighted edges</span>
+<span class="sd">        include_self: Whether to include self-loops</span>
+<span class="sd">        approximate: Use approximate nearest neighbors for speed (requires pynndescent)</span>
+<span class="sd">        n_jobs: Number of parallel jobs (-1 for all cores)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph as numpy array of shape (n_edges, 2) or (n_edges, 3).</span>
+<span class="sd">        Columns are [source, target] or [source, target, weight].</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(100, 10)</span>
+<span class="sd">        &gt;&gt;&gt; graph = knn_graph(vectors, n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; graph.shape[1] == 3  # source, target, weight</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="n">vectors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">approximate</span> <span class="ow">and</span> <span class="n">_has_pynndescent</span><span class="p">:</span>
+        <span class="c1"># Use approximate nearest neighbors</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">NNDescent</span><span class="p">(</span>
+            <span class="n">vectors</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">include_self</span> <span class="k">else</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">neighbor_graph</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">include_self</span><span class="p">:</span>
+            <span class="c1"># Remove self-loops (first neighbor is always self)</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    
+    <span class="k">elif</span> <span class="n">_has_sklearn</span><span class="p">:</span>
+        <span class="c1"># Use sklearn&#39;s exact nearest neighbors</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">include_self</span> <span class="k">else</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span>
+            <span class="n">distances</span><span class="p">,</span> <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">include_self</span><span class="p">:</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="n">distances</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Either pynndescent or scikit-learn must be installed&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Convert to edge list format</span>
+    <span class="k">return</span> <span class="n">_neighbors_to_edgelist</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="mutual_knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.mutual_knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mutual_knn_graph</span><span class="p">(</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span><span class="p">,</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">ensure_connectivity</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;mst&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mst&quot;</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct a mutual k-nearest neighbors graph.</span>
+<span class="sd">    </span>
+<span class="sd">    An edge exists between points i and j only if i is among j&#39;s k nearest neighbors</span>
+<span class="sd">    AND j is among i&#39;s k nearest neighbors. This symmetrization reduces hub effects</span>
+<span class="sd">    and improves local structure preservation in high dimensions.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: Input data of shape (n_samples, n_features)</span>
+<span class="sd">        n_neighbors: Number of neighbors for each sample</span>
+<span class="sd">        metric: Distance metric</span>
+<span class="sd">        mode: &#39;connectivity&#39; returns binary edges, &#39;distance&#39; returns weighted edges</span>
+<span class="sd">        approximate: Use approximate nearest neighbors for speed</span>
+<span class="sd">        ensure_connectivity: Method to ensure graph connectivity</span>
+<span class="sd">            - &#39;none&#39;: May result in disconnected components</span>
+<span class="sd">            - &#39;mst&#39;: Add minimum spanning tree edges</span>
+<span class="sd">            - &#39;nn&#39;: Connect isolated vertices to their nearest neighbor</span>
+<span class="sd">        n_jobs: Number of parallel jobs</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(50, 5)</span>
+<span class="sd">        &gt;&gt;&gt; graph = mutual_knn_graph(vectors, n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; len(graph) &gt; 0</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># First build regular k-NN graph</span>
+    <span class="k">if</span> <span class="n">approximate</span> <span class="ow">and</span> <span class="n">_has_pynndescent</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">NNDescent</span><span class="p">(</span>
+            <span class="n">vectors</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">neighbor_graph</span>
+        <span class="c1"># Remove self-loops</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">_has_sklearn</span><span class="p">:</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">distances</span><span class="p">,</span> <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Either pynndescent or scikit-learn must be installed&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Convert to sparse matrix for efficient mutual intersection</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="n">vectors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">knn_matrix</span> <span class="o">=</span> <span class="n">_neighbors_to_sparse_matrix</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+    
+    <span class="c1"># Make symmetric by keeping only mutual edges</span>
+    <span class="n">mutual_matrix</span> <span class="o">=</span> <span class="n">knn_matrix</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">knn_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    
+    <span class="c1"># Convert back to edge list</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">_sparse_to_edgelist</span><span class="p">(</span><span class="n">mutual_matrix</span><span class="p">,</span> <span class="n">include_weights</span><span class="o">=</span><span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span><span class="p">))</span>
+    
+    <span class="c1"># Ensure connectivity if requested</span>
+    <span class="k">if</span> <span class="n">ensure_connectivity</span> <span class="o">!=</span> <span class="s2">&quot;none&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">_ensure_connectivity</span><span class="p">(</span>
+            <span class="n">graph</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">ensure_connectivity</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span>
+        <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">graph</span></div>
+
+
+
+<div class="viewcode-block" id="epsilon_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.epsilon_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">epsilon_graph</span><span class="p">(</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span><span class="p">,</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct an epsilon-neighborhood graph.</span>
+<span class="sd">    </span>
+<span class="sd">    Connect all pairs of points within distance radius of each other.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: Input data of shape (n_samples, n_features)</span>
+<span class="sd">        radius: Maximum distance for neighborhood</span>
+<span class="sd">        metric: Distance metric</span>
+<span class="sd">        mode: &#39;connectivity&#39; returns binary edges, &#39;distance&#39; returns weighted edges</span>
+<span class="sd">        approximate: Use approximate methods (not well-supported for radius queries)</span>
+<span class="sd">        n_jobs: Number of parallel jobs</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(30, 3)</span>
+<span class="sd">        &gt;&gt;&gt; graph = epsilon_graph(vectors, radius=0.5)</span>
+<span class="sd">        &gt;&gt;&gt; len(graph) &gt;= 0</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">_has_sklearn</span><span class="p">:</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span>
+            <span class="n">distances</span><span class="p">,</span> <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">radius_neighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">radius_neighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+        
+        <span class="c1"># Convert ragged arrays to edge list</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">nbrs</span><span class="p">,</span> <span class="n">dists</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j_idx</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nbrs</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>  <span class="c1"># Skip self-loops</span>
+                    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span> <span class="ow">and</span> <span class="n">dists</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">dists</span><span class="p">[</span><span class="n">j_idx</span><span class="p">]])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="k">if</span> <span class="n">edges</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span> <span class="k">else</span> <span class="mi">2</span><span class="p">))</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Fallback to manual distance computation</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="n">vectors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dist_matrix</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+        
+        <span class="c1"># Find pairs within radius</span>
+        <span class="n">i_idx</span><span class="p">,</span> <span class="n">j_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">dist_matrix</span> <span class="o">&lt;=</span> <span class="n">radius</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dist_matrix</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">dist_matrix</span><span class="p">[</span><span class="n">i_idx</span><span class="p">,</span> <span class="n">j_idx</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">i_idx</span><span class="p">,</span> <span class="n">j_idx</span><span class="p">,</span> <span class="n">weights</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">i_idx</span><span class="p">,</span> <span class="n">j_idx</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="adaptive_knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.adaptive_knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">adaptive_knn_graph</span><span class="p">(</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">local_connectivity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">bandwidth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct k-NN graph with adaptive distance scaling (UMAP-style).</span>
+<span class="sd">    </span>
+<span class="sd">    Uses local density estimation to adaptively scale distances, ensuring each</span>
+<span class="sd">    point has at least &#39;local_connectivity&#39; strong connections. This helps</span>
+<span class="sd">    preserve local structure in varying-density regions.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: Input data of shape (n_samples, n_features)</span>
+<span class="sd">        n_neighbors: Number of neighbors for each sample</span>
+<span class="sd">        metric: Distance metric</span>
+<span class="sd">        local_connectivity: Minimum number of strong local connections per point</span>
+<span class="sd">        bandwidth: Gaussian kernel bandwidth for weight computation</span>
+<span class="sd">        approximate: Use approximate nearest neighbors</span>
+<span class="sd">        n_jobs: Number of parallel jobs</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph as numpy array of shape (n_edges, 3) with adaptive weights</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(40, 8)</span>
+<span class="sd">        &gt;&gt;&gt; graph = adaptive_knn_graph(vectors, n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; graph.shape[1] == 3</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get k-NN graph with distances</span>
+    <span class="k">if</span> <span class="n">approximate</span> <span class="ow">and</span> <span class="n">_has_pynndescent</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">NNDescent</span><span class="p">(</span>
+            <span class="n">vectors</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">neighbors</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">neighbor_graph</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">_has_sklearn</span><span class="p">:</span>
+        <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">distances</span><span class="p">,</span> <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Either pynndescent or scikit-learn must be installed&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Compute local distance scale (rho) for each point</span>
+    <span class="c1"># Use distance to the local_connectivity-th nearest neighbor</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">local_connectivity</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="c1"># Compute adaptive weights using smooth approximation</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            <span class="c1"># Adaptive distance: subtract local scale and apply Gaussian kernel</span>
+            <span class="n">adaptive_dist</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span> <span class="o">-</span> <span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">adaptive_dist</span> <span class="o">/</span> <span class="n">bandwidth</span><span class="p">)</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">weight</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="random_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.random_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">random_graph</span><span class="p">(</span>
+    <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;erdos_renyi&quot;</span><span class="p">,</span> <span class="s2">&quot;barabasi_albert&quot;</span><span class="p">,</span> <span class="s2">&quot;watts_strogatz&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;erdos_renyi&quot;</span><span class="p">,</span>
+    <span class="n">p</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">k</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">weighted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a random graph according to classical random graph models.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        n_nodes: Number of nodes in the graph</span>
+<span class="sd">        model: Random graph model to use</span>
+<span class="sd">            - &#39;erdos_renyi&#39;: Each edge exists with probability p</span>
+<span class="sd">            - &#39;barabasi_albert&#39;: Preferential attachment, add m edges per new node</span>
+<span class="sd">            - &#39;watts_strogatz&#39;: Small-world, start with k-regular lattice, rewire with prob p</span>
+<span class="sd">        p: Edge probability (erdos_renyi, watts_strogatz)</span>
+<span class="sd">        m: Edges per node (barabasi_albert)</span>
+<span class="sd">        k: Initial degree (watts_strogatz)</span>
+<span class="sd">        weighted: If True, assign random weights to edges</span>
+<span class="sd">        seed: Random seed for reproducibility</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; graph = random_graph(20, model=&quot;erdos_renyi&quot;, p=0.3, seed=42)</span>
+<span class="sd">        &gt;&gt;&gt; len(graph) &gt; 0</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;erdos_renyi&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;erdos_renyi model requires &#39;p&#39; parameter&quot;</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">_erdos_renyi_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+    
+    <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;barabasi_albert&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;barabasi_albert model requires &#39;m&#39; parameter&quot;</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">_barabasi_albert_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+    
+    <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;watts_strogatz&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;watts_strogatz model requires &#39;k&#39; and &#39;p&#39; parameters&quot;</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">_watts_strogatz_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model: </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">weighted</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">))</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">edges</span><span class="p">,</span> <span class="n">weights</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">edges</span></div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Helper functions (module-internal utilities)</span>
+<span class="c1"># ============================================================================</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_neighbors_to_edgelist</span><span class="p">(</span>
+    <span class="n">neighbors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">distances</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert neighbor indices and distances to edge list format.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        neighbors: Array of shape (n_samples, n_neighbors) with neighbor indices</span>
+<span class="sd">        distances: Optional array of shape (n_samples, n_neighbors) with distances</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Edge list of shape (n_edges, 2) or (n_edges, 3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">n_neighbors</span><span class="p">)</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">neighbors</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">distances</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">distances</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">sources</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">weights</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">sources</span><span class="p">,</span> <span class="n">targets</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_neighbors_to_sparse_matrix</span><span class="p">(</span>
+    <span class="n">neighbors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">distances</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert neighbor indices and distances to sparse adjacency matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        neighbors: Array of shape (n_samples, n_neighbors)</span>
+<span class="sd">        distances: Optional distances array</span>
+<span class="sd">        n_samples: Number of samples (inferred if None)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Sparse adjacency matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="n">neighbors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">neighbors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">n_neighbors</span><span class="p">)</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">neighbors</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">distances</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">distances</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="n">targets</span><span class="p">)),</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sparse_to_edgelist</span><span class="p">(</span>
+    <span class="n">matrix</span><span class="p">:</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">include_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert sparse matrix to edge list.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        matrix: Sparse adjacency matrix</span>
+<span class="sd">        include_weights: Whether to include edge weights</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Edge list array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coo</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">tocoo</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">include_weights</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">coo</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">coo</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">coo</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">coo</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">coo</span><span class="o">.</span><span class="n">col</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_connectivity</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;mst&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">],</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">n_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure graph connectivity by adding edges.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        graph: Current edge list</span>
+<span class="sd">        vectors: Original vector data</span>
+<span class="sd">        method: Connectivity method (&#39;mst&#39; or &#39;nn&#39;)</span>
+<span class="sd">        metric: Distance metric</span>
+<span class="sd">        n_samples: Number of samples</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Enhanced edge list with guaranteed connectivity</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Convert to sparse matrix to check connectivity</span>
+    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="c1"># Has weights</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))),</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">has_weights</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)),</span> <span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))),</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">has_weights</span> <span class="o">=</span> <span class="kc">False</span>
+    
+    <span class="c1"># Make undirected for connectivity check</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">+</span> <span class="n">matrix</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="n">n_components</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">connected_components</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">n_components</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># Already connected</span>
+        <span class="k">return</span> <span class="n">graph</span>
+    
+    <span class="c1"># Need to add edges</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mst&quot;</span><span class="p">:</span>
+        <span class="c1"># Compute full distance matrix (or use sparse approximation)</span>
+        <span class="c1"># For large datasets, this is expensive - consider using approximate MST</span>
+        <span class="n">dist_matrix</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">vectors</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">dist_sparse</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">dist_matrix</span><span class="p">)</span>
+        
+        <span class="c1"># Compute MST</span>
+        <span class="n">mst</span> <span class="o">=</span> <span class="n">minimum_spanning_tree</span><span class="p">(</span><span class="n">dist_sparse</span><span class="p">)</span>
+        <span class="n">mst_edges</span> <span class="o">=</span> <span class="n">_sparse_to_edgelist</span><span class="p">(</span><span class="n">mst</span><span class="p">,</span> <span class="n">include_weights</span><span class="o">=</span><span class="n">has_weights</span><span class="p">)</span>
+        
+        <span class="c1"># Combine with original edges</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">graph</span><span class="p">,</span> <span class="n">mst_edges</span><span class="p">])</span>
+    
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;nn&quot;</span><span class="p">:</span>
+        <span class="c1"># Connect each isolated point to its nearest neighbor</span>
+        <span class="c1"># Find isolated components</span>
+        <span class="n">isolated_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">comp_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">):</span>
+            <span class="n">comp_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">labels</span> <span class="o">==</span> <span class="n">comp_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">comp_nodes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">isolated_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comp_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="c1"># For each isolated node, find nearest neighbor</span>
+        <span class="k">if</span> <span class="n">_has_sklearn</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">isolated_nodes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+            <span class="n">distances</span><span class="p">,</span> <span class="n">neighbors</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="n">isolated_nodes</span><span class="p">])</span>
+            
+            <span class="n">new_edges</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">isolated_nodes</span><span class="p">):</span>
+                <span class="c1"># Connect to nearest neighbor (excluding self)</span>
+                <span class="n">nearest</span> <span class="o">=</span> <span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">has_weights</span><span class="p">:</span>
+                    <span class="n">new_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">node</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">node</span><span class="p">,</span> <span class="n">nearest</span><span class="p">])</span>
+            
+            <span class="k">if</span> <span class="n">new_edges</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">graph</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_edges</span><span class="p">)])</span>
+        
+        <span class="k">return</span> <span class="n">graph</span>
+    
+    <span class="k">return</span> <span class="n">graph</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_erdos_renyi_graph</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Erdos-Renyi random graph.&quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="k">if</span> <span class="n">edges</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_barabasi_albert_graph</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Barabasi-Albert preferential attachment graph.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">m</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;m must be between 1 and n-1&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Start with complete graph on m nodes</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+    
+    <span class="c1"># Track degree of each node</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="c1"># Add remaining nodes with preferential attachment</span>
+    <span class="k">for</span> <span class="n">new_node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="c1"># Select m nodes with probability proportional to degree</span>
+        <span class="k">if</span> <span class="n">degree</span><span class="p">[:</span><span class="n">new_node</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">probs</span> <span class="o">=</span> <span class="n">degree</span><span class="p">[:</span><span class="n">new_node</span><span class="p">]</span> <span class="o">/</span> <span class="n">degree</span><span class="p">[:</span><span class="n">new_node</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">new_node</span><span class="p">,</span> <span class="n">target</span><span class="p">])</span>
+                <span class="n">degree</span><span class="p">[</span><span class="n">new_node</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">degree</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="k">if</span> <span class="n">edges</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_watts_strogatz_graph</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Watts-Strogatz small-world graph.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be less than n&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be even&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Start with ring lattice</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">target</span><span class="p">])</span>
+    
+    <span class="c1"># Rewire edges with probability p</span>
+    <span class="n">rewired_edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">existing_targets</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
+    
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">edge</span>
+        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+            <span class="c1"># Rewire - find new target</span>
+            <span class="n">possible_targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">possible_targets</span><span class="p">:</span>
+                <span class="n">new_target</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">possible_targets</span><span class="p">)</span>
+                <span class="n">rewired_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">new_target</span><span class="p">])</span>
+                <span class="n">existing_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_target</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rewired_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+                <span class="n">existing_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rewired_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="n">existing_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rewired_edges</span><span class="p">)</span> <span class="k">if</span> <span class="n">rewired_edges</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Sklearn-style Estimator Classes</span>
+<span class="c1"># ============================================================================</span>
+
+
+<div class="viewcode-block" id="KNNGraphEstimator">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.KNNGraphEstimator">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">KNNGraphEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sklearn-style estimator for k-NN graph construction.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; estimator = KNNGraphEstimator(n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(50, 10)</span>
+<span class="sd">        &gt;&gt;&gt; graph = estimator.fit_transform(vectors)</span>
+<span class="sd">        &gt;&gt;&gt; graph.shape[1] in [2, 3]</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span>
+    <span class="n">include_self</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+<div class="viewcode-block" id="KNNGraphEstimator.fit_transform">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.KNNGraphEstimator.fit_transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit and transform in one step.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">knn_graph</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">include_self</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">include_self</span><span class="p">,</span>
+            <span class="n">approximate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">approximate</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutualKNNGraphEstimator">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.MutualKNNGraphEstimator">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MutualKNNGraphEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sklearn-style estimator for mutual k-NN graph construction.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; estimator = MutualKNNGraphEstimator(n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(30, 8)</span>
+<span class="sd">        &gt;&gt;&gt; graph = estimator.fit_transform(vectors)</span>
+<span class="sd">        &gt;&gt;&gt; len(graph) &gt;= 0</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ensure_connectivity</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;mst&quot;</span><span class="p">,</span> <span class="s2">&quot;nn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mst&quot;</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+<div class="viewcode-block" id="MutualKNNGraphEstimator.fit_transform">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.MutualKNNGraphEstimator.fit_transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit and transform in one step.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">mutual_knn_graph</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">approximate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">approximate</span><span class="p">,</span>
+            <span class="n">ensure_connectivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ensure_connectivity</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AdaptiveKNNGraphEstimator">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.AdaptiveKNNGraphEstimator">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AdaptiveKNNGraphEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sklearn-style estimator for adaptive k-NN graph construction.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; estimator = AdaptiveKNNGraphEstimator(n_neighbors=5)</span>
+<span class="sd">        &gt;&gt;&gt; vectors = np.random.rand(25, 6)</span>
+<span class="sd">        &gt;&gt;&gt; graph = estimator.fit_transform(vectors)</span>
+<span class="sd">        &gt;&gt;&gt; graph.shape[1] == 3</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
+    <span class="n">local_connectivity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">bandwidth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">approximate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+<div class="viewcode-block" id="AdaptiveKNNGraphEstimator.fit_transform">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.AdaptiveKNNGraphEstimator.fit_transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit and transform in one step.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">local_connectivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_connectivity</span><span class="p">,</span>
+            <span class="n">bandwidth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">,</span>
+            <span class="n">approximate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">approximate</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

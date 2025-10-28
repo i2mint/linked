@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.datasrc.vectors &mdash; linked 0.0.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=282f96c0"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="linked.tests" href="../tests.html" />
+    <link rel="prev" title="linked.datasrc.minidot" href="minidot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">linked.datasrc.vectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.AdaptiveKNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">AdaptiveKNNGraphEstimator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linked.datasrc.vectors.AdaptiveKNNGraphEstimator.fit_transform"><code class="docutils literal notranslate"><span class="pre">AdaptiveKNNGraphEstimator.fit_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.KNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">KNNGraphEstimator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linked.datasrc.vectors.KNNGraphEstimator.fit_transform"><code class="docutils literal notranslate"><span class="pre">KNNGraphEstimator.fit_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.MutualKNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">MutualKNNGraphEstimator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linked.datasrc.vectors.MutualKNNGraphEstimator.fit_transform"><code class="docutils literal notranslate"><span class="pre">MutualKNNGraphEstimator.fit_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.epsilon_graph"><code class="docutils literal notranslate"><span class="pre">epsilon_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.knn_graph"><code class="docutils literal notranslate"><span class="pre">knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">mutual_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.vectors.random_graph"><code class="docutils literal notranslate"><span class="pre">random_graph()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">linked.datasrc.vectors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/linked/datasrc/vectors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-linked.datasrc.vectors">
+<span id="linked-datasrc-vectors"></span><h1>linked.datasrc.vectors<a class="headerlink" href="#module-linked.datasrc.vectors" title="Link to this heading"></a></h1>
+<p>Graph construction from high-dimensional vector data.</p>
+<p>This module provides tools to convert point/vector data into graph data (links/edges)
+suitable for network analysis and visualization. Focus is on sparse graph construction
+from large datasets (50K-500K points) with high dimensionality (up to 3000+ dimensions).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.AdaptiveKNNGraphEstimator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">AdaptiveKNNGraphEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#AdaptiveKNNGraphEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.AdaptiveKNNGraphEstimator" title="Link to this definition"></a></dt>
+<dd><p>Sklearn-style estimator for adaptive k-NN graph construction.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">estimator</span> <span class="o">=</span> <span class="n">AdaptiveKNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.AdaptiveKNNGraphEstimator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#AdaptiveKNNGraphEstimator.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.AdaptiveKNNGraphEstimator.fit_transform" title="Link to this definition"></a></dt>
+<dd><p>Fit and transform in one step.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.KNNGraphEstimator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">KNNGraphEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#KNNGraphEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.KNNGraphEstimator" title="Link to this definition"></a></dt>
+<dd><p>Sklearn-style estimator for k-NN graph construction.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">estimator</span> <span class="o">=</span> <span class="n">KNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.KNNGraphEstimator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#KNNGraphEstimator.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.KNNGraphEstimator.fit_transform" title="Link to this definition"></a></dt>
+<dd><p>Fit and transform in one step.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.MutualKNNGraphEstimator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">MutualKNNGraphEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'mst'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nn'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#MutualKNNGraphEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.MutualKNNGraphEstimator" title="Link to this definition"></a></dt>
+<dd><p>Sklearn-style estimator for mutual k-NN graph construction.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">estimator</span> <span class="o">=</span> <span class="n">MutualKNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.MutualKNNGraphEstimator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#MutualKNNGraphEstimator.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.MutualKNNGraphEstimator.fit_transform" title="Link to this definition"></a></dt>
+<dd><p>Fit and transform in one step.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.adaptive_knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">adaptive_knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#adaptive_knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.adaptive_knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct k-NN graph with adaptive distance scaling (UMAP-style).</p>
+<p>Uses local density estimation to adaptively scale distances, ensuring each
+point has at least ‘local_connectivity’ strong connections. This helps
+preserve local structure in varying-density regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>local_connectivity</strong> – Minimum number of strong local connections per point</p></li>
+<li><p><strong>bandwidth</strong> – Gaussian kernel bandwidth for weight computation</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 3) with adaptive weights</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.epsilon_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">epsilon_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#epsilon_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.epsilon_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct an epsilon-neighborhood graph.</p>
+<p>Connect all pairs of points within distance radius of each other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>radius</strong> – Maximum distance for neighborhood</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>approximate</strong> – Use approximate methods (not well-supported for radius queries)</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">epsilon_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct a k-nearest neighbors graph from vectors.</p>
+<p>Each point is connected to its k nearest neighbors. Returns sparse edge list
+with optional distance weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric (euclidean, manhattan, cosine, etc.)</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>include_self</strong> – Whether to include self-loops</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors for speed (requires pynndescent)</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs (-1 for all cores)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3).
+Columns are [source, target] or [source, target, weight].</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>  <span class="c1"># source, target, weight</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.mutual_knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">mutual_knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'mst'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nn'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#mutual_knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.mutual_knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct a mutual k-nearest neighbors graph.</p>
+<p>An edge exists between points i and j only if i is among j’s k nearest neighbors
+AND j is among i’s k nearest neighbors. This symmetrization reduces hub effects
+and improves local structure preservation in high dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors for speed</p></li>
+<li><p><strong>ensure_connectivity</strong> – Method to ensure graph connectivity
+- ‘none’: May result in disconnected components
+- ‘mst’: Add minimum spanning tree edges
+- ‘nn’: Connect isolated vertices to their nearest neighbor</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.vectors.random_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.vectors.</span></span><span class="sig-name descname"><span class="pre">random_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'erdos_renyi'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'barabasi_albert'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'watts_strogatz'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'erdos_renyi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/vectors.html#random_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.vectors.random_graph" title="Link to this definition"></a></dt>
+<dd><p>Generate a random graph according to classical random graph models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_nodes</strong> – Number of nodes in the graph</p></li>
+<li><p><strong>model</strong> – Random graph model to use
+- ‘erdos_renyi’: Each edge exists with probability p
+- ‘barabasi_albert’: Preferential attachment, add m edges per new node
+- ‘watts_strogatz’: Small-world, start with k-regular lattice, rewire with prob p</p></li>
+<li><p><strong>p</strong> – Edge probability (erdos_renyi, watts_strogatz)</p></li>
+<li><p><strong>m</strong> – Edges per node (barabasi_albert)</p></li>
+<li><p><strong>k</strong> – Initial degree (watts_strogatz)</p></li>
+<li><p><strong>weighted</strong> – If True, assign random weights to edges</p></li>
+<li><p><strong>seed</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;erdos_renyi&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="minidot.html" class="btn btn-neutral float-left" title="linked.datasrc.minidot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tests.html" class="btn btn-neutral float-right" title="linked.tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

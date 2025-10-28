@@ -1,0 +1,4 @@
+linked.datasrc.vectors
+======================
+.. automodule:: linked.datasrc.vectors
+   :members:

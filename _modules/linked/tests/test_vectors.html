@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.tests.test_vectors &mdash; linked 0.0.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=282f96c0"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">linked.tests.test_vectors</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for linked.tests.test_vectors</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tests for linked.datasrc.vectors module.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;/home/claude&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc.vectors</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">knn_graph</span><span class="p">,</span>
+    <span class="n">mutual_knn_graph</span><span class="p">,</span>
+    <span class="n">epsilon_graph</span><span class="p">,</span>
+    <span class="n">adaptive_knn_graph</span><span class="p">,</span>
+    <span class="n">random_graph</span><span class="p">,</span>
+    <span class="n">KNNGraphEstimator</span><span class="p">,</span>
+    <span class="n">MutualKNNGraphEstimator</span><span class="p">,</span>
+    <span class="n">AdaptiveKNNGraphEstimator</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_knn_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test basic k-NN graph construction.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing knn_graph...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="c1"># Test with distance mode</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Should have 3 columns (source, target, weight)&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Should have n_samples * n_neighbors edges&quot;</span>
+    
+    <span class="c1"># Test with connectivity mode</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;connectivity&quot;</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Should have 2 columns (source, target)&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ knn_graph tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_mutual_knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_mutual_knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_mutual_knn_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test mutual k-NN graph construction.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing mutual_knn_graph...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ensure_connectivity</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Should have 3 columns&quot;</span>
+    <span class="c1"># Mutual graph should have fewer edges than regular k-NN</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">50</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Mutual graph should be sparser&quot;</span>
+    
+    <span class="c1"># Test with MST connectivity</span>
+    <span class="n">graph_mst</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ensure_connectivity</span><span class="o">=</span><span class="s2">&quot;mst&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph_mst</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="s2">&quot;MST version should have at least as many edges&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ mutual_knn_graph tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_epsilon_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_epsilon_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_epsilon_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test epsilon-neighborhood graph construction.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing epsilon_graph...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    
+    <span class="c1"># Use a radius that should capture some neighbors</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">epsilon_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Should have 3 columns&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Should have some edges or be empty&quot;</span>
+    
+    <span class="c1"># Test connectivity mode</span>
+    <span class="n">graph_conn</span> <span class="o">=</span> <span class="n">epsilon_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;connectivity&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph_conn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Should have 2 columns&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ epsilon_graph tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_adaptive_knn_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_adaptive_knn_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_adaptive_knn_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test adaptive k-NN graph construction.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing adaptive_knn_graph...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Should have 3 columns with weights&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">40</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Should have n_samples * n_neighbors edges&quot;</span>
+    <span class="c1"># Weights should be between 0 and 1 (after exponential)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;Weights should be in [0, 1]&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ adaptive_knn_graph tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_random_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_random_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_random_graph</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test random graph generation.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing random_graph...&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Test Erdos-Renyi</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;erdos_renyi&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Should have 2 columns&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Should have some edges&quot;</span>
+    
+    <span class="c1"># Test with weights</span>
+    <span class="n">graph_weighted</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;erdos_renyi&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph_weighted</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Should have 3 columns with weights&quot;</span>
+    
+    <span class="c1"># Test Barabasi-Albert</span>
+    <span class="n">graph_ba</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;barabasi_albert&quot;</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph_ba</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;BA graph should have edges&quot;</span>
+    
+    <span class="c1"># Test Watts-Strogatz</span>
+    <span class="n">graph_ws</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;watts_strogatz&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph_ws</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;WS graph should have edges&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ random_graph tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_estimators">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_estimators">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_estimators</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test sklearn-style estimator classes.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing estimator classes...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    
+    <span class="c1"># Test KNNGraphEstimator</span>
+    <span class="n">est</span> <span class="o">=</span> <span class="n">KNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;KNN estimator should return 3 columns&quot;</span>
+    
+    <span class="c1"># Test MutualKNNGraphEstimator</span>
+    <span class="n">est_mutual</span> <span class="o">=</span> <span class="n">MutualKNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">graph_mutual</span> <span class="o">=</span> <span class="n">est_mutual</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph_mutual</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Mutual KNN estimator should return 3 columns&quot;</span>
+    
+    <span class="c1"># Test AdaptiveKNNGraphEstimator</span>
+    <span class="n">est_adaptive</span> <span class="o">=</span> <span class="n">AdaptiveKNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">graph_adaptive</span> <span class="o">=</span> <span class="n">est_adaptive</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">graph_adaptive</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Adaptive KNN estimator should return 3 columns&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Estimator tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_edge_format">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_edge_format">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_edge_format</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that edge formats are correct.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing edge formats...&quot;</span><span class="p">)</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    
+    <span class="c1"># All graphs should return numpy arrays</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">&quot;Should return numpy array&quot;</span>
+    
+    <span class="c1"># Check integer node indices</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    
+    <span class="c1"># Check node indices are in valid range</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">graph</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">))</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Edge format tests passed&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running tests for linked.datasrc.vectors...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    
+    <span class="n">test_knn_graph</span><span class="p">()</span>
+    <span class="n">test_mutual_knn_graph</span><span class="p">()</span>
+    <span class="n">test_epsilon_graph</span><span class="p">()</span>
+    <span class="n">test_adaptive_knn_graph</span><span class="p">()</span>
+    <span class="n">test_random_graph</span><span class="p">()</span>
+    <span class="n">test_estimators</span><span class="p">()</span>
+    <span class="n">test_edge_format</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All tests passed! ✓&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
