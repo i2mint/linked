@@ -5,7 +5,7 @@ mini-dot: A very simple mini-language resembling graphviz dot
 from operator import methodcaller
 from functools import partial
 from itertools import product, chain
-from typing import Iterable
+from collections.abc import Iterable
 import re
 from types import SimpleNamespace
 
