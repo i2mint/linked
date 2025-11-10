@@ -2,6 +2,7 @@
 mini-dot: A very simple mini-language resembling graphviz dot
 """
 
+from contextlib import suppress
 from operator import methodcaller
 from functools import partial
 from itertools import product, chain
@@ -92,3 +93,47 @@ def mini_dot_to_graph_jdict(mini_dot: str, *, field_names=DFLT_FIELD_NAMES):
     """
     pairs = get_source_target_pairs(mini_dot)
     return source_target_pairs_to_graph_jdict(pairs, field_names=field_names)
+
+
+# ============================================================================
+# Register with cast module
+# ============================================================================
+
+with suppress(ImportError, ModuleNotFoundError):
+    from linked.cast import register_transformation
+
+    # Register minidot -> nodes_and_links conversion
+    @register_transformation('minidot', 'nodes_and_links', cost=0.6)
+    def _minidot_to_nodes_and_links(mini_dot_str: str, ctx: dict = None):
+        """Convert mini-dot string to nodes_and_links dict."""
+        return mini_dot_to_graph_jdict(mini_dot_str)
+
+    # Register nodes_and_links -> minidot conversion
+    @register_transformation('nodes_and_links', 'minidot', cost=0.8)
+    def _nodes_and_links_to_minidot(nodes_and_links: dict, ctx: dict = None):
+        """Convert nodes_and_links dict to mini-dot string."""
+        ctx = ctx or {}
+        source_field = ctx.get('source_field', 'source')
+        target_field = ctx.get('target_field', 'target')
+
+        links = nodes_and_links.get('links', [])
+
+        # Group links by source for more compact representation
+        from collections import defaultdict
+
+        sources_to_targets = defaultdict(list)
+
+        for link in links:
+            if isinstance(link, dict):
+                src = link.get(source_field)
+                tgt = link.get(target_field)
+                if src is not None and tgt is not None:
+                    sources_to_targets[src].append(tgt)
+
+        # Build mini-dot lines
+        lines = []
+        for src, targets in sources_to_targets.items():
+            targets_str = ', '.join(str(t) for t in targets)
+            lines.append(f"{src} -> {targets_str}")
+
+        return '\n'.join(lines)

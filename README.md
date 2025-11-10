@@ -4,6 +4,49 @@ Create and transform graphs
 
 To install:	```pip install linked```
 
+## Graph Conversion System
+
+The `linked.cast` module provides a unified system for converting between different graph data representations. It automatically discovers the shortest conversion path between any two formats.
+
+### Quick Start
+
+```python
+import numpy as np
+from linked import convert_graph
+
+# Convert edge list to nodes_and_links format
+edgelist = np.array([[0, 1], [1, 2], [2, 0]])
+graph = convert_graph(edgelist, 'nodes_and_links')
+
+# Convert mini-dot to NetworkX (multi-hop conversion)
+minidot = "1 -> 2\n2 -> 3"
+nx_graph = convert_graph(minidot, 'networkx_graph', from_kind='minidot')
+
+# Convert vectors to graph using k-NN
+vectors = np.random.rand(100, 50)
+knn_graph = convert_graph(
+    vectors, 
+    'weighted_edgelist',
+    from_kind='vectors',
+    context={'n_neighbors': 15}
+)
+```
+
+### Supported Formats
+
+- **`nodes_and_links`**: JSON-style dict (D3.js compatible)
+- **`edgelist`**: numpy array (n_edges, 2)
+- **`weighted_edgelist`**: numpy array (n_edges, 3)
+- **`minidot`**: Simple text format
+- **`adjacency_matrix`**: Dense numpy array
+- **`sparse_adjacency`**: scipy sparse matrix
+- **`adjacency_list`**: Dict of neighbors
+- **`networkx_graph`**: NetworkX Graph
+- **`networkx_digraph`**: NetworkX DiGraph
+- **`edges_dataframe`**: pandas DataFrame
+- **`graph_dataframes`**: Dict with edges/nodes DataFrames
+- **`vectors`**: numpy array → graph via k-NN
+
 
 ## mini_dot_to_graph_jdict
 
@@ -56,6 +99,8 @@ graph = mutual_knn_graph(vectors, n_neighbors=15, ensure_connectivity="mst")
 # Build an adaptive k-NN graph (UMAP-style)
 graph = adaptive_knn_graph(vectors, n_neighbors=15, local_connectivity=1)
 ```
+
+See more in [misc/CAST_README.md]().
 
 ### Graph Construction Methods
 
@@ -284,3 +329,4 @@ The algorithms implemented are based on recent research:
 - Belkin & Niyogi (2003): Laplacian Eigenmaps
 
 For more details, see the included research document.
+

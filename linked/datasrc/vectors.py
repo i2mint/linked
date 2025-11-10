@@ -6,6 +6,7 @@ suitable for network analysis and visualization. Focus is on sparse graph constr
 from large datasets (50K-500K points) with high dimensionality (up to 3000+ dimensions).
 """
 
+from contextlib import suppress
 from dataclasses import dataclass
 from typing import Literal, Optional, Callable, Union
 import warnings
@@ -764,4 +765,88 @@ class AdaptiveKNNGraphEstimator:
             bandwidth=self.bandwidth,
             approximate=self.approximate,
             n_jobs=self.n_jobs,
+        )
+
+
+# ============================================================================
+# Register with cast module
+# ============================================================================
+
+with suppress(ImportError, ModuleNotFoundError):
+    from linked.cast import register_kind, register_transformation
+
+    # Register 'vectors' kind for numpy arrays that are 2D with features
+    def _is_vectors(obj) -> bool:
+        """Check if object is a vectors array (2D numpy array)."""
+        if not isinstance(obj, np.ndarray):
+            return False
+        return obj.ndim == 2 and obj.shape[0] > 1 and obj.shape[1] > 1
+
+    register_kind('vectors', isa=_is_vectors)
+
+    # Register vectors -> weighted_edgelist conversion (using knn_graph)
+    @register_transformation('vectors', 'weighted_edgelist', cost=1.0)
+    def _vectors_to_weighted_edgelist(vectors: np.ndarray, ctx: dict = None):
+        """
+        Convert vectors to weighted edge list using k-NN graph.
+
+        Context keys:
+        - 'n_neighbors': number of neighbors (default: 15)
+        - 'metric': distance metric (default: 'euclidean')
+        - 'graph_type': type of graph to build - 'knn', 'mutual_knn', 'adaptive_knn', 'epsilon' (default: 'knn')
+        - 'approximate': use approximate NN (default: True)
+        """
+        ctx = ctx or {}
+        n_neighbors = ctx.get('n_neighbors', 15)
+        metric = ctx.get('metric', 'euclidean')
+        graph_type = ctx.get('graph_type', 'knn')
+        approximate = ctx.get('approximate', True)
+
+        if graph_type == 'mutual_knn':
+            return mutual_knn_graph(
+                vectors,
+                n_neighbors=n_neighbors,
+                metric=metric,
+                mode='distance',
+                approximate=approximate,
+            )
+        elif graph_type == 'adaptive_knn':
+            return adaptive_knn_graph(
+                vectors,
+                n_neighbors=n_neighbors,
+                metric=metric,
+                approximate=approximate,
+            )
+        elif graph_type == 'epsilon':
+            radius = ctx.get('radius', 0.5)
+            return epsilon_graph(
+                vectors,
+                radius=radius,
+                metric=metric,
+                mode='distance',
+            )
+        else:  # default to knn
+            return knn_graph(
+                vectors,
+                n_neighbors=n_neighbors,
+                metric=metric,
+                mode='distance',
+                approximate=approximate,
+            )
+
+    # Register vectors -> edgelist conversion (unweighted)
+    @register_transformation('vectors', 'edgelist', cost=1.0)
+    def _vectors_to_edgelist(vectors: np.ndarray, ctx: dict = None):
+        """Convert vectors to unweighted edge list using k-NN graph."""
+        ctx = ctx or {}
+        n_neighbors = ctx.get('n_neighbors', 15)
+        metric = ctx.get('metric', 'euclidean')
+        approximate = ctx.get('approximate', True)
+
+        return knn_graph(
+            vectors,
+            n_neighbors=n_neighbors,
+            metric=metric,
+            mode='connectivity',
+            approximate=approximate,
         )
