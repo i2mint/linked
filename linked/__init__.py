@@ -59,8 +59,8 @@ from linked.datasrc import (
 # Import cast API
 from linked.cast import (
     convert_graph,
-    get_graph_converter,
-    list_graph_kinds,
+    graph_converter,
+    graph_kinds,
     reachable_from_kind,
     sources_for_kind,
     graph_transformer,
@@ -76,8 +76,8 @@ __all__ = [
     'random_graph',
     # Graph conversion API
     'convert_graph',
-    'get_graph_converter',
-    'list_graph_kinds',
+    'graph_converter',
+    'graph_kinds',
     'reachable_from_kind',
     'sources_for_kind',
     'graph_transformer',

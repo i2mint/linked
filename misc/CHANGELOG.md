@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 2025-10-27 Initial Module Creation
+## 2025-10-27 Initial vectors Module Creation
 
 ### Added
 - Created `linked.datasrc.vectors` module for graph construction from high-dimensional vector data

@@ -260,7 +260,7 @@ def convert_graph(
         )
 
 
-def get_graph_converter(from_kind: str, to_kind: str, context: dict = None) -> callable:
+def graph_converter(from_kind: str, to_kind: str, context: dict = None) -> callable:
     """
     Get a converter function for repeated conversions.
 
@@ -280,13 +280,13 @@ def get_graph_converter(from_kind: str, to_kind: str, context: dict = None) -> c
 
     Examples
     --------
-    >>> to_edgelist = get_graph_converter('minidot', 'edgelist')
+    >>> to_edgelist = graph_converter('minidot', 'edgelist')
     >>> edgelist = to_edgelist("1 -> 2")
     """
     return graph_transformer.get_transformer(from_kind, to_kind, context=context)
 
 
-def list_graph_kinds() -> set:
+def graph_kinds() -> set:
     """
     List all registered graph kinds.
 
@@ -297,7 +297,7 @@ def list_graph_kinds() -> set:
 
     Examples
     --------
-    >>> kinds = list_graph_kinds()
+    >>> kinds = graph_kinds()
     >>> 'nodes_and_links' in kinds
     True
     """
@@ -351,14 +351,24 @@ def sources_for_kind(kind: str) -> set:
 
 
 # ============================================================================
+# Attach utility functions to convert_graph for convenient access
+# ============================================================================
+
+convert_graph.graph_kinds = graph_kinds
+convert_graph.graph_converter = graph_converter
+convert_graph.reachable_from_kind = reachable_from_kind
+convert_graph.sources_for_kind = sources_for_kind
+
+
+# ============================================================================
 # Export public API
 # ============================================================================
 
 __all__ = [
     'graph_transformer',
     'convert_graph',
-    'get_graph_converter',
-    'list_graph_kinds',
+    'graph_converter',
+    'graph_kinds',
     'reachable_from_kind',
     'sources_for_kind',
     'register_kind',
