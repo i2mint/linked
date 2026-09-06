@@ -68,17 +68,17 @@ from linked.cast import (
 
 __all__ = [
     # Legacy datasrc exports
-    'mini_dot_to_graph_jdict',
-    'knn_graph',
-    'mutual_knn_graph',
-    'adaptive_knn_graph',
-    'epsilon_graph',
-    'random_graph',
+    "mini_dot_to_graph_jdict",
+    "knn_graph",
+    "mutual_knn_graph",
+    "adaptive_knn_graph",
+    "epsilon_graph",
+    "random_graph",
     # Graph conversion API
-    'convert_graph',
-    'graph_converter',
-    'graph_kinds',
-    'reachable_from_kind',
-    'sources_for_kind',
-    'graph_transformer',
+    "convert_graph",
+    "graph_converter",
+    "graph_kinds",
+    "reachable_from_kind",
+    "sources_for_kind",
+    "graph_transformer",
 ]

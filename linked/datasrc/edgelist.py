@@ -60,14 +60,14 @@ def edgelist_to_nodes_and_links(edgelist: np.ndarray, ctx: dict = None) -> dict:
     3
     """
     ctx = ctx or {}
-    id_field = ctx.get('id_field', 'id')
-    source_field = ctx.get('source_field', 'source')
-    target_field = ctx.get('target_field', 'target')
-    weight_field = ctx.get('weight_field', 'weight')
-    node_id_map = ctx.get('node_id_map', None)
+    id_field = ctx.get("id_field", "id")
+    source_field = ctx.get("source_field", "source")
+    target_field = ctx.get("target_field", "target")
+    weight_field = ctx.get("weight_field", "weight")
+    node_id_map = ctx.get("node_id_map", None)
 
     if len(edgelist) == 0:
-        return {'nodes': [], 'links': []}
+        return {"nodes": [], "links": []}
 
     # Extract unique node indices
     node_indices = np.unique(edgelist[:, :2].astype(int))
@@ -100,7 +100,7 @@ def edgelist_to_nodes_and_links(edgelist: np.ndarray, ctx: dict = None) -> dict:
 
         links.append(link)
 
-    return {'nodes': nodes, 'links': links}
+    return {"nodes": nodes, "links": links}
 
 
 def nodes_and_links_to_edgelist(nodes_and_links: dict, ctx: dict = None) -> np.ndarray:
@@ -132,14 +132,14 @@ def nodes_and_links_to_edgelist(nodes_and_links: dict, ctx: dict = None) -> np.n
     (1, 2)
     """
     ctx = ctx or {}
-    id_field = ctx.get('id_field', 'id')
-    source_field = ctx.get('source_field', 'source')
-    target_field = ctx.get('target_field', 'target')
-    weight_field = ctx.get('weight_field', 'weight')
-    include_weights = ctx.get('include_weights', False)
+    id_field = ctx.get("id_field", "id")
+    source_field = ctx.get("source_field", "source")
+    target_field = ctx.get("target_field", "target")
+    weight_field = ctx.get("weight_field", "weight")
+    include_weights = ctx.get("include_weights", False)
 
-    nodes = nodes_and_links.get('nodes', [])
-    links = nodes_and_links.get('links', [])
+    nodes = nodes_and_links.get("nodes", [])
+    links = nodes_and_links.get("links", [])
 
     if not links:
         return np.empty((0, 3 if include_weights else 2))
@@ -164,8 +164,8 @@ def nodes_and_links_to_edgelist(nodes_and_links: dict, ctx: dict = None) -> np.n
         if not isinstance(link, dict):
             continue
 
-        src_id = str(link.get(source_field, ''))
-        tgt_id = str(link.get(target_field, ''))
+        src_id = str(link.get(source_field, ""))
+        tgt_id = str(link.get(target_field, ""))
 
         # Get or create indices for source and target
         if src_id not in node_id_to_idx:
@@ -218,7 +218,7 @@ def edgelist_to_weighted_edgelist(edgelist: np.ndarray, ctx: dict = None) -> np.
     1.0
     """
     ctx = ctx or {}
-    default_weight = ctx.get('default_weight', 1.0)
+    default_weight = ctx.get("default_weight", 1.0)
 
     if len(edgelist) == 0:
         return np.empty((0, 3))
@@ -264,29 +264,29 @@ def weighted_edgelist_to_edgelist(
 
 with suppress(ImportError, ModuleNotFoundError):
     # Edge list <-> nodes_and_links
-    register_transformation('edgelist', 'nodes_and_links', cost=0.5)(
+    register_transformation("edgelist", "nodes_and_links", cost=0.5)(
         edgelist_to_nodes_and_links
     )
-    register_transformation('nodes_and_links', 'edgelist', cost=0.5)(
+    register_transformation("nodes_and_links", "edgelist", cost=0.5)(
         nodes_and_links_to_edgelist
     )
 
     # Weighted edge list <-> nodes_and_links (same functions work for both)
-    register_transformation('weighted_edgelist', 'nodes_and_links', cost=0.5)(
+    register_transformation("weighted_edgelist", "nodes_and_links", cost=0.5)(
         edgelist_to_nodes_and_links
     )
 
     # For nodes_and_links -> weighted_edgelist, we need to ensure weights are included
-    @register_transformation('nodes_and_links', 'weighted_edgelist', cost=0.5)
+    @register_transformation("nodes_and_links", "weighted_edgelist", cost=0.5)
     def _nodes_and_links_to_weighted_edgelist(obj, ctx):
         ctx = ctx or {}
-        ctx['include_weights'] = True
+        ctx["include_weights"] = True
         return nodes_and_links_to_edgelist(obj, ctx)
 
     # Weighted <-> unweighted conversions
-    register_transformation('edgelist', 'weighted_edgelist', cost=0.1)(
+    register_transformation("edgelist", "weighted_edgelist", cost=0.1)(
         edgelist_to_weighted_edgelist
     )
-    register_transformation('weighted_edgelist', 'edgelist', cost=0.1)(
+    register_transformation("weighted_edgelist", "edgelist", cost=0.1)(
         weighted_edgelist_to_edgelist
     )

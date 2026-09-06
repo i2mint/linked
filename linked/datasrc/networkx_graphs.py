@@ -46,8 +46,8 @@ if _has_networkx:
 
     # Register kinds
     with suppress(ImportError, ModuleNotFoundError):
-        register_kind('networkx_graph', isa=_is_networkx_graph)
-        register_kind('networkx_digraph', isa=_is_networkx_digraph)
+        register_kind("networkx_graph", isa=_is_networkx_graph)
+        register_kind("networkx_digraph", isa=_is_networkx_digraph)
 
 
 # ============================================================================
@@ -83,8 +83,8 @@ if _has_networkx:
         True
         """
         ctx = ctx or {}
-        weight_attr = ctx.get('weight_attr', 'weight')
-        include_weights = ctx.get('include_weights', None)
+        weight_attr = ctx.get("weight_attr", "weight")
+        include_weights = ctx.get("include_weights", None)
 
         if graph.number_of_edges() == 0:
             return np.empty((0, 2))
@@ -139,8 +139,8 @@ if _has_networkx:
         3
         """
         ctx = ctx or {}
-        weight_attr = ctx.get('weight_attr', 'weight')
-        node_id_map = ctx.get('node_id_map', None)
+        weight_attr = ctx.get("weight_attr", "weight")
+        node_id_map = ctx.get("node_id_map", None)
 
         G = nx.Graph()
 
@@ -197,8 +197,8 @@ if _has_networkx:
         True
         """
         ctx = ctx or {}
-        weight_attr = ctx.get('weight_attr', 'weight')
-        node_id_map = ctx.get('node_id_map', None)
+        weight_attr = ctx.get("weight_attr", "weight")
+        node_id_map = ctx.get("node_id_map", None)
 
         G = nx.DiGraph()
 
@@ -268,13 +268,13 @@ if _has_networkx:
         True
         """
         ctx = ctx or {}
-        id_field = ctx.get('id_field', 'id')
-        source_field = ctx.get('source_field', 'source')
-        target_field = ctx.get('target_field', 'target')
-        weight_field = ctx.get('weight_field', 'weight')
-        weight_attr = ctx.get('weight_attr', 'weight')
-        include_node_attrs = ctx.get('include_node_attrs', True)
-        include_edge_attrs = ctx.get('include_edge_attrs', True)
+        id_field = ctx.get("id_field", "id")
+        source_field = ctx.get("source_field", "source")
+        target_field = ctx.get("target_field", "target")
+        weight_field = ctx.get("weight_field", "weight")
+        weight_attr = ctx.get("weight_attr", "weight")
+        include_node_attrs = ctx.get("include_node_attrs", True)
+        include_edge_attrs = ctx.get("include_edge_attrs", True)
 
         # Build nodes
         nodes = []
@@ -303,7 +303,7 @@ if _has_networkx:
 
             links.append(link)
 
-        return {'nodes': nodes, 'links': links}
+        return {"nodes": nodes, "links": links}
 
     def nodes_and_links_to_networkx_graph(
         nodes_and_links: dict, ctx: dict = None
@@ -331,14 +331,14 @@ if _has_networkx:
         1
         """
         ctx = ctx or {}
-        id_field = ctx.get('id_field', 'id')
-        source_field = ctx.get('source_field', 'source')
-        target_field = ctx.get('target_field', 'target')
+        id_field = ctx.get("id_field", "id")
+        source_field = ctx.get("source_field", "source")
+        target_field = ctx.get("target_field", "target")
 
         G = nx.Graph()
 
         # Add nodes with attributes
-        for node in nodes_and_links.get('nodes', []):
+        for node in nodes_and_links.get("nodes", []):
             if isinstance(node, dict):
                 node_id = node.get(id_field)
                 # Get other attributes (excluding id)
@@ -348,7 +348,7 @@ if _has_networkx:
                 G.add_node(str(node))
 
         # Add edges with attributes
-        for link in nodes_and_links.get('links', []):
+        for link in nodes_and_links.get("links", []):
             if isinstance(link, dict):
                 src = link.get(source_field)
                 tgt = link.get(target_field)
@@ -389,29 +389,29 @@ if _has_networkx:
 if _has_networkx:
     with suppress(ImportError, ModuleNotFoundError):
         # NetworkX Graph (undirected) conversions
-        register_transformation('networkx_graph', 'edgelist', cost=0.3)(
+        register_transformation("networkx_graph", "edgelist", cost=0.3)(
             networkx_to_edgelist
         )
-        register_transformation('edgelist', 'networkx_graph', cost=0.3)(
+        register_transformation("edgelist", "networkx_graph", cost=0.3)(
             edgelist_to_networkx_graph
         )
-        register_transformation('networkx_graph', 'nodes_and_links', cost=0.3)(
+        register_transformation("networkx_graph", "nodes_and_links", cost=0.3)(
             networkx_to_nodes_and_links
         )
-        register_transformation('nodes_and_links', 'networkx_graph', cost=0.3)(
+        register_transformation("nodes_and_links", "networkx_graph", cost=0.3)(
             nodes_and_links_to_networkx_graph
         )
 
         # NetworkX DiGraph (directed) conversions
-        register_transformation('networkx_digraph', 'edgelist', cost=0.3)(
+        register_transformation("networkx_digraph", "edgelist", cost=0.3)(
             networkx_to_edgelist
         )
-        register_transformation('edgelist', 'networkx_digraph', cost=0.3)(
+        register_transformation("edgelist", "networkx_digraph", cost=0.3)(
             edgelist_to_networkx_digraph
         )
-        register_transformation('networkx_digraph', 'nodes_and_links', cost=0.3)(
+        register_transformation("networkx_digraph", "nodes_and_links", cost=0.3)(
             networkx_to_nodes_and_links
         )
-        register_transformation('nodes_and_links', 'networkx_digraph', cost=0.3)(
+        register_transformation("nodes_and_links", "networkx_digraph", cost=0.3)(
             nodes_and_links_to_networkx_digraph
         )

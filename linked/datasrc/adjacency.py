@@ -43,7 +43,7 @@ def _is_adjacency_list(obj) -> bool:
         return False
     # Check if values are lists/iterables of integers
     for val in obj.values():
-        if not hasattr(val, '__iter__'):
+        if not hasattr(val, "__iter__"):
             return False
         break  # Just check first one
     return True
@@ -57,11 +57,11 @@ if _has_scipy:
 
     # Register kinds
     with suppress(ImportError, ModuleNotFoundError):
-        register_kind('sparse_adjacency', isa=_is_sparse_adjacency)
+        register_kind("sparse_adjacency", isa=_is_sparse_adjacency)
 
 
 with suppress(ImportError, ModuleNotFoundError):
-    register_kind('adjacency_list', isa=_is_adjacency_list)
+    register_kind("adjacency_list", isa=_is_adjacency_list)
 
 
 # ============================================================================
@@ -98,15 +98,15 @@ def adjacency_matrix_to_edgelist(
     True
     """
     ctx = ctx or {}
-    threshold = ctx.get('threshold', 0)
+    threshold = ctx.get("threshold", 0)
 
     # Auto-detect if directed
-    directed = ctx.get('directed', None)
+    directed = ctx.get("directed", None)
     if directed is None:
         directed = not np.allclose(adj_matrix, adj_matrix.T)
 
     # Auto-detect if we should include weights
-    include_weights = ctx.get('include_weights', None)
+    include_weights = ctx.get("include_weights", None)
     if include_weights is None:
         # Include weights if matrix has values other than 0 and 1
         unique_vals = np.unique(adj_matrix[adj_matrix > threshold])
@@ -159,20 +159,20 @@ def edgelist_to_adjacency_matrix(edgelist: np.ndarray, ctx: dict = None) -> np.n
     True
     """
     ctx = ctx or {}
-    directed = ctx.get('directed', False)
+    directed = ctx.get("directed", False)
 
     if len(edgelist) == 0:
-        n_nodes = ctx.get('n_nodes', 0)
+        n_nodes = ctx.get("n_nodes", 0)
         return np.zeros((n_nodes, n_nodes))
 
     # Determine number of nodes
-    n_nodes = ctx.get('n_nodes', None)
+    n_nodes = ctx.get("n_nodes", None)
     if n_nodes is None:
         n_nodes = int(edgelist[:, :2].max()) + 1
 
     # Determine dtype
     has_weights = edgelist.shape[1] >= 3
-    dtype = ctx.get('dtype', None)
+    dtype = ctx.get("dtype", None)
     if dtype is None:
         dtype = float if has_weights else int
 
@@ -228,7 +228,7 @@ if _has_scipy:
         coo = sparse_adj.tocoo()
 
         # Auto-detect directed
-        directed = ctx.get('directed', None)
+        directed = ctx.get("directed", None)
         if directed is None:
             # Check if symmetric
             directed = not (coo != coo.T).nnz == 0
@@ -242,7 +242,7 @@ if _has_scipy:
             edges = np.column_stack([coo.row[mask], coo.col[mask], coo.data[mask]])
 
         # Check if we should include weights
-        include_weights = ctx.get('include_weights', None)
+        include_weights = ctx.get("include_weights", None)
         if include_weights is None:
             unique_vals = np.unique(edges[:, 2])
             include_weights = len(unique_vals) > 1 or (
@@ -281,15 +281,15 @@ if _has_scipy:
         True
         """
         ctx = ctx or {}
-        directed = ctx.get('directed', False)
-        format = ctx.get('format', 'csr')
+        directed = ctx.get("directed", False)
+        format = ctx.get("format", "csr")
 
         if len(edgelist) == 0:
-            n_nodes = ctx.get('n_nodes', 0)
+            n_nodes = ctx.get("n_nodes", 0)
             return sparse.csr_matrix((n_nodes, n_nodes))
 
         # Determine number of nodes
-        n_nodes = ctx.get('n_nodes', None)
+        n_nodes = ctx.get("n_nodes", None)
         if n_nodes is None:
             n_nodes = int(edgelist[:, :2].max()) + 1
 
@@ -314,9 +314,9 @@ if _has_scipy:
         sparse_adj = sparse.coo_matrix((data, (row, col)), shape=(n_nodes, n_nodes))
 
         # Convert to desired format
-        if format == 'csr':
+        if format == "csr":
             return sparse_adj.tocsr()
-        elif format == 'csc':
+        elif format == "csc":
             return sparse_adj.tocsc()
         else:
             return sparse_adj
@@ -353,7 +353,7 @@ def adjacency_list_to_edgelist(adj_list: dict, ctx: dict = None) -> np.ndarray:
     True
     """
     ctx = ctx or {}
-    include_weights = ctx.get('include_weights', False)
+    include_weights = ctx.get("include_weights", False)
 
     edges = []
     for src, neighbors in adj_list.items():
@@ -402,8 +402,8 @@ def edgelist_to_adjacency_list(edgelist: np.ndarray, ctx: dict = None) -> dict:
     True
     """
     ctx = ctx or {}
-    directed = ctx.get('directed', False)
-    include_weights = ctx.get('include_weights', None)
+    directed = ctx.get("directed", False)
+    include_weights = ctx.get("include_weights", None)
 
     if len(edgelist) == 0:
         return {}
@@ -453,13 +453,13 @@ if _has_scipy:
     def adjacency_matrix_to_sparse_adjacency(adj_matrix: np.ndarray, ctx: dict = None):
         """Convert dense adjacency matrix to sparse format."""
         ctx = ctx or {}
-        format = ctx.get('format', 'csr')
+        format = ctx.get("format", "csr")
 
         sparse_adj = sparse.coo_matrix(adj_matrix)
 
-        if format == 'csr':
+        if format == "csr":
             return sparse_adj.tocsr()
-        elif format == 'csc':
+        elif format == "csc":
             return sparse_adj.tocsc()
         else:
             return sparse_adj
@@ -477,35 +477,35 @@ if _has_scipy:
 
 with suppress(ImportError, ModuleNotFoundError):
     # Adjacency matrix conversions
-    register_transformation('adjacency_matrix', 'edgelist', cost=0.5)(
+    register_transformation("adjacency_matrix", "edgelist", cost=0.5)(
         adjacency_matrix_to_edgelist
     )
-    register_transformation('edgelist', 'adjacency_matrix', cost=0.5)(
+    register_transformation("edgelist", "adjacency_matrix", cost=0.5)(
         edgelist_to_adjacency_matrix
     )
 
     # Adjacency list conversions
-    register_transformation('adjacency_list', 'edgelist', cost=0.4)(
+    register_transformation("adjacency_list", "edgelist", cost=0.4)(
         adjacency_list_to_edgelist
     )
-    register_transformation('edgelist', 'adjacency_list', cost=0.4)(
+    register_transformation("edgelist", "adjacency_list", cost=0.4)(
         edgelist_to_adjacency_list
     )
 
 if _has_scipy:
     with suppress(ImportError, ModuleNotFoundError):
         # Sparse adjacency conversions
-        register_transformation('sparse_adjacency', 'edgelist', cost=0.4)(
+        register_transformation("sparse_adjacency", "edgelist", cost=0.4)(
             sparse_adjacency_to_edgelist
         )
-        register_transformation('edgelist', 'sparse_adjacency', cost=0.4)(
+        register_transformation("edgelist", "sparse_adjacency", cost=0.4)(
             edgelist_to_sparse_adjacency
         )
 
         # Dense <-> sparse conversions
-        register_transformation('adjacency_matrix', 'sparse_adjacency', cost=0.2)(
+        register_transformation("adjacency_matrix", "sparse_adjacency", cost=0.2)(
             adjacency_matrix_to_sparse_adjacency
         )
-        register_transformation('sparse_adjacency', 'adjacency_matrix', cost=0.2)(
+        register_transformation("sparse_adjacency", "adjacency_matrix", cost=0.2)(
             sparse_adjacency_to_adjacency_matrix
         )

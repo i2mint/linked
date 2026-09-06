@@ -44,24 +44,24 @@ if _has_pandas:
         # Common column name patterns for edges
         cols = set(obj.columns)
         return (
-            ('source' in cols and 'target' in cols)
-            or ('src' in cols and 'dst' in cols)
-            or ('from' in cols and 'to' in cols)
-            or ('source' in cols and 'dest' in cols)
+            ("source" in cols and "target" in cols)
+            or ("src" in cols and "dst" in cols)
+            or ("from" in cols and "to" in cols)
+            or ("source" in cols and "dest" in cols)
         )
 
     def _is_graph_dataframes(obj) -> bool:
         """Check if object is a dict with 'edges' DataFrame."""
         if not isinstance(obj, dict):
             return False
-        if 'edges' not in obj:
+        if "edges" not in obj:
             return False
-        return isinstance(obj['edges'], pd.DataFrame)
+        return isinstance(obj["edges"], pd.DataFrame)
 
     # Register kinds
     with suppress(ImportError, ModuleNotFoundError):
-        register_kind('edges_dataframe', isa=_is_edges_dataframe)
-        register_kind('graph_dataframes', isa=_is_graph_dataframes)
+        register_kind("edges_dataframe", isa=_is_edges_dataframe)
+        register_kind("graph_dataframes", isa=_is_graph_dataframes)
 
 
 # ============================================================================
@@ -101,17 +101,17 @@ if _has_pandas:
         ctx = ctx or {}
 
         # Auto-detect source column
-        source_col = ctx.get('source_col')
+        source_col = ctx.get("source_col")
         if source_col is None:
-            for col in ['source', 'src', 'from']:
+            for col in ["source", "src", "from"]:
                 if col in df.columns:
                     source_col = col
                     break
 
         # Auto-detect target column
-        target_col = ctx.get('target_col')
+        target_col = ctx.get("target_col")
         if target_col is None:
-            for col in ['target', 'dst', 'to', 'dest']:
+            for col in ["target", "dst", "to", "dest"]:
                 if col in df.columns:
                     target_col = col
                     break
@@ -121,9 +121,9 @@ if _has_pandas:
                 f"Could not detect source/target columns in DataFrame. Columns: {list(df.columns)}"
             )
 
-        weight_col = ctx.get('weight_col', 'weight')
-        include_weights = ctx.get('include_weights', None)
-        node_id_map = ctx.get('node_id_map', None)
+        weight_col = ctx.get("weight_col", "weight")
+        include_weights = ctx.get("include_weights", None)
+        node_id_map = ctx.get("node_id_map", None)
 
         # Auto-detect weights
         if include_weights is None:
@@ -182,10 +182,10 @@ if _has_pandas:
         True
         """
         ctx = ctx or {}
-        source_col = ctx.get('source_col', 'source')
-        target_col = ctx.get('target_col', 'target')
-        weight_col = ctx.get('weight_col', 'weight')
-        node_id_map = ctx.get('node_id_map', None)
+        source_col = ctx.get("source_col", "source")
+        target_col = ctx.get("target_col", "target")
+        weight_col = ctx.get("weight_col", "weight")
+        node_id_map = ctx.get("node_id_map", None)
 
         if len(edgelist) == 0:
             return pd.DataFrame(columns=[source_col, target_col])
@@ -240,16 +240,16 @@ if _has_pandas:
         ctx = ctx or {}
 
         # Auto-detect columns
-        source_col = ctx.get('source_col')
+        source_col = ctx.get("source_col")
         if source_col is None:
-            for col in ['source', 'src', 'from']:
+            for col in ["source", "src", "from"]:
                 if col in df.columns:
                     source_col = col
                     break
 
-        target_col = ctx.get('target_col')
+        target_col = ctx.get("target_col")
         if target_col is None:
-            for col in ['target', 'dst', 'to', 'dest']:
+            for col in ["target", "dst", "to", "dest"]:
                 if col in df.columns:
                     target_col = col
                     break
@@ -257,9 +257,9 @@ if _has_pandas:
         if source_col is None or target_col is None:
             raise ValueError(f"Could not detect source/target columns")
 
-        id_field = ctx.get('id_field', 'id')
-        source_field = ctx.get('source_field', 'source')
-        target_field = ctx.get('target_field', 'target')
+        id_field = ctx.get("id_field", "id")
+        source_field = ctx.get("source_field", "source")
+        target_field = ctx.get("target_field", "target")
 
         # Get unique nodes
         all_nodes = pd.concat([df[source_col], df[target_col]]).unique()
@@ -278,7 +278,7 @@ if _has_pandas:
                     link[col] = row[col]
             links.append(link)
 
-        return {'nodes': nodes, 'links': links}
+        return {"nodes": nodes, "links": links}
 
     def nodes_and_links_to_edges_dataframe(
         nodes_and_links: dict, ctx: dict = None
@@ -310,12 +310,12 @@ if _has_pandas:
         1
         """
         ctx = ctx or {}
-        source_col = ctx.get('source_col', 'source')
-        target_col = ctx.get('target_col', 'target')
-        source_field = ctx.get('source_field', 'source')
-        target_field = ctx.get('target_field', 'target')
+        source_col = ctx.get("source_col", "source")
+        target_col = ctx.get("target_col", "target")
+        source_field = ctx.get("source_field", "source")
+        target_field = ctx.get("target_field", "target")
 
-        links = nodes_and_links.get('links', [])
+        links = nodes_and_links.get("links", [])
 
         if not links:
             return pd.DataFrame(columns=[source_col, target_col])
@@ -367,20 +367,20 @@ if _has_pandas:
         3
         """
         ctx = ctx or {}
-        edges_df = graph_dfs['edges']
-        nodes_df = graph_dfs.get('nodes', None)
+        edges_df = graph_dfs["edges"]
+        nodes_df = graph_dfs.get("nodes", None)
 
         # Convert edges
         result = edges_dataframe_to_nodes_and_links(edges_df, ctx)
 
         # If nodes DataFrame is provided, use it to enrich node data
         if nodes_df is not None:
-            id_field = ctx.get('id_field', 'id')
-            id_col = ctx.get('id_col', 'id')
+            id_field = ctx.get("id_field", "id")
+            id_col = ctx.get("id_col", "id")
 
             # If DataFrame has 'id' column, use it; otherwise use index
             if id_col in nodes_df.columns:
-                node_records = nodes_df.to_dict('records')
+                node_records = nodes_df.to_dict("records")
             else:
                 # Use index as id
                 node_records = []
@@ -389,7 +389,7 @@ if _has_pandas:
                     record.update(row.to_dict())
                     node_records.append(record)
 
-            result['nodes'] = node_records
+            result["nodes"] = node_records
 
         return result
 
@@ -424,13 +424,13 @@ if _has_pandas:
         edges_df = nodes_and_links_to_edges_dataframe(nodes_and_links, ctx)
 
         # Convert nodes
-        nodes = nodes_and_links.get('nodes', [])
+        nodes = nodes_and_links.get("nodes", [])
         if nodes:
             nodes_df = pd.DataFrame(nodes)
         else:
             nodes_df = pd.DataFrame()
 
-        return {'edges': edges_df, 'nodes': nodes_df}
+        return {"edges": edges_df, "nodes": nodes_df}
 
 
 # ============================================================================
@@ -440,23 +440,23 @@ if _has_pandas:
 if _has_pandas:
     with suppress(ImportError, ModuleNotFoundError):
         # Edges DataFrame conversions
-        register_transformation('edges_dataframe', 'edgelist', cost=0.4)(
+        register_transformation("edges_dataframe", "edgelist", cost=0.4)(
             edges_dataframe_to_edgelist
         )
-        register_transformation('edgelist', 'edges_dataframe', cost=0.4)(
+        register_transformation("edgelist", "edges_dataframe", cost=0.4)(
             edgelist_to_edges_dataframe
         )
-        register_transformation('edges_dataframe', 'nodes_and_links', cost=0.4)(
+        register_transformation("edges_dataframe", "nodes_and_links", cost=0.4)(
             edges_dataframe_to_nodes_and_links
         )
-        register_transformation('nodes_and_links', 'edges_dataframe', cost=0.4)(
+        register_transformation("nodes_and_links", "edges_dataframe", cost=0.4)(
             nodes_and_links_to_edges_dataframe
         )
 
         # Graph DataFrames (with nodes) conversions
-        register_transformation('graph_dataframes', 'nodes_and_links', cost=0.3)(
+        register_transformation("graph_dataframes", "nodes_and_links", cost=0.3)(
             graph_dataframes_to_nodes_and_links
         )
-        register_transformation('nodes_and_links', 'graph_dataframes', cost=0.3)(
+        register_transformation("nodes_and_links", "graph_dataframes", cost=0.3)(
             nodes_and_links_to_graph_dataframes
         )

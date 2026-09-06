@@ -16,7 +16,6 @@ from scipy import sparse
 from scipy.spatial.distance import cdist, pdist, squareform
 from scipy.sparse.csgraph import minimum_spanning_tree, connected_components
 
-
 # Optional imports with graceful degradation
 try:
     from sklearn.neighbors import NearestNeighbors
@@ -782,10 +781,10 @@ with suppress(ImportError, ModuleNotFoundError):
             return False
         return obj.ndim == 2 and obj.shape[0] > 1 and obj.shape[1] > 1
 
-    register_kind('vectors', isa=_is_vectors)
+    register_kind("vectors", isa=_is_vectors)
 
     # Register vectors -> weighted_edgelist conversion (using knn_graph)
-    @register_transformation('vectors', 'weighted_edgelist', cost=1.0)
+    @register_transformation("vectors", "weighted_edgelist", cost=1.0)
     def _vectors_to_weighted_edgelist(vectors: np.ndarray, ctx: dict = None):
         """
         Convert vectors to weighted edge list using k-NN graph.
@@ -797,56 +796,56 @@ with suppress(ImportError, ModuleNotFoundError):
         - 'approximate': use approximate NN (default: True)
         """
         ctx = ctx or {}
-        n_neighbors = ctx.get('n_neighbors', 15)
-        metric = ctx.get('metric', 'euclidean')
-        graph_type = ctx.get('graph_type', 'knn')
-        approximate = ctx.get('approximate', True)
+        n_neighbors = ctx.get("n_neighbors", 15)
+        metric = ctx.get("metric", "euclidean")
+        graph_type = ctx.get("graph_type", "knn")
+        approximate = ctx.get("approximate", True)
 
-        if graph_type == 'mutual_knn':
+        if graph_type == "mutual_knn":
             return mutual_knn_graph(
                 vectors,
                 n_neighbors=n_neighbors,
                 metric=metric,
-                mode='distance',
+                mode="distance",
                 approximate=approximate,
             )
-        elif graph_type == 'adaptive_knn':
+        elif graph_type == "adaptive_knn":
             return adaptive_knn_graph(
                 vectors,
                 n_neighbors=n_neighbors,
                 metric=metric,
                 approximate=approximate,
             )
-        elif graph_type == 'epsilon':
-            radius = ctx.get('radius', 0.5)
+        elif graph_type == "epsilon":
+            radius = ctx.get("radius", 0.5)
             return epsilon_graph(
                 vectors,
                 radius=radius,
                 metric=metric,
-                mode='distance',
+                mode="distance",
             )
         else:  # default to knn
             return knn_graph(
                 vectors,
                 n_neighbors=n_neighbors,
                 metric=metric,
-                mode='distance',
+                mode="distance",
                 approximate=approximate,
             )
 
     # Register vectors -> edgelist conversion (unweighted)
-    @register_transformation('vectors', 'edgelist', cost=1.0)
+    @register_transformation("vectors", "edgelist", cost=1.0)
     def _vectors_to_edgelist(vectors: np.ndarray, ctx: dict = None):
         """Convert vectors to unweighted edge list using k-NN graph."""
         ctx = ctx or {}
-        n_neighbors = ctx.get('n_neighbors', 15)
-        metric = ctx.get('metric', 'euclidean')
-        approximate = ctx.get('approximate', True)
+        n_neighbors = ctx.get("n_neighbors", 15)
+        metric = ctx.get("metric", "euclidean")
+        approximate = ctx.get("approximate", True)
 
         return knn_graph(
             vectors,
             n_neighbors=n_neighbors,
             metric=metric,
-            mode='connectivity',
+            mode="connectivity",
             approximate=approximate,
         )

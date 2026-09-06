@@ -27,7 +27,7 @@ print("-" * 70)
 edgelist = np.array([[0, 1], [1, 2], [2, 0]])
 print(f"Original edge list:\n{edgelist}")
 
-graph = convert_graph(edgelist, 'nodes_and_links')
+graph = convert_graph(edgelist, "nodes_and_links")
 print(f"\nConverted to nodes_and_links:")
 print(f"  Nodes: {len(graph['nodes'])} nodes")
 print(f"  Links: {len(graph['links'])} links")
@@ -44,7 +44,7 @@ C, D -> E
 """
 print(f"Mini-dot input:\n{minidot}")
 
-graph = convert_graph(minidot.strip(), 'nodes_and_links', from_kind='minidot')
+graph = convert_graph(minidot.strip(), "nodes_and_links", from_kind="minidot")
 print(f"Converted to nodes_and_links:")
 print(f"  Nodes: {[n['id'] for n in graph['nodes']]}")
 print(f"  Number of links: {len(graph['links'])}")
@@ -56,7 +56,7 @@ print("-" * 70)
 minidot_simple = "0 -> 1\n1 -> 2\n2 -> 0"
 print(f"Mini-dot: {repr(minidot_simple)}")
 
-adj_matrix = convert_graph(minidot_simple, 'adjacency_matrix', from_kind='minidot')
+adj_matrix = convert_graph(minidot_simple, "adjacency_matrix", from_kind="minidot")
 print(f"Adjacency matrix:\n{adj_matrix}")
 
 # 5. Weighted graphs
@@ -66,7 +66,7 @@ print("-" * 70)
 weighted_edges = np.array([[0, 1, 0.5], [1, 2, 0.8], [2, 0, 0.3]])
 print(f"Weighted edge list:\n{weighted_edges}")
 
-graph = convert_graph(weighted_edges, 'nodes_and_links', from_kind='weighted_edgelist')
+graph = convert_graph(weighted_edges, "nodes_and_links", from_kind="weighted_edgelist")
 print(f"Converted to nodes_and_links (preserves weights):")
 print(f"  First link with weight: {graph['links'][0]}")
 
@@ -77,7 +77,7 @@ print("-" * 70)
 adj_list = {0: [1, 2], 1: [2], 2: [0]}
 print(f"Adjacency list: {adj_list}")
 
-edgelist = convert_graph(adj_list, 'edgelist', from_kind='adjacency_list')
+edgelist = convert_graph(adj_list, "edgelist", from_kind="adjacency_list")
 print(f"Converted to edge list:\n{edgelist}")
 
 # 7. Vectors to graph (k-NN)
@@ -90,9 +90,9 @@ print(f"Vectors shape: {vectors.shape}")
 
 knn_edges = convert_graph(
     vectors,
-    'weighted_edgelist',
-    from_kind='vectors',
-    context={'n_neighbors': 3, 'metric': 'euclidean'},
+    "weighted_edgelist",
+    from_kind="vectors",
+    context={"n_neighbors": 3, "metric": "euclidean"},
 )
 print(f"k-NN graph (k=3):")
 print(f"  Number of edges: {len(knn_edges)}")
@@ -102,7 +102,7 @@ print(f"  First 3 edges (with distances):\n{knn_edges[:3]}")
 print("\n8. Reachability from 'edgelist':")
 print("-" * 70)
 
-reachable = reachable_from_kind('edgelist')
+reachable = reachable_from_kind("edgelist")
 print(f"Can convert from edgelist to:")
 for kind in sorted(reachable):
     print(f"  - {kind}")
@@ -115,8 +115,8 @@ original = np.array([[0, 1], [1, 2], [2, 3]])
 print(f"Original edge list:\n{original}")
 
 # edgelist -> nodes_and_links -> edgelist
-intermediate = convert_graph(original, 'nodes_and_links')
-result = convert_graph(intermediate, 'edgelist')
+intermediate = convert_graph(original, "nodes_and_links")
+result = convert_graph(intermediate, "edgelist")
 print(f"After round trip (edgelist -> nodes_and_links -> edgelist):\n{result}")
 
 # 10. Context parameters
@@ -125,16 +125,16 @@ print("-" * 70)
 
 # Custom field names
 graph = {
-    'nodes': [{'node_id': 'A'}, {'node_id': 'B'}, {'node_id': 'C'}],
-    'links': [
-        {'from': 'A', 'to': 'B', 'distance': 1.5},
-        {'from': 'B', 'to': 'C', 'distance': 2.0},
+    "nodes": [{"node_id": "A"}, {"node_id": "B"}, {"node_id": "C"}],
+    "links": [
+        {"from": "A", "to": "B", "distance": 1.5},
+        {"from": "B", "to": "C", "distance": 2.0},
     ],
 }
 
-context = {'id_field': 'node_id', 'source_field': 'from', 'target_field': 'to'}
+context = {"id_field": "node_id", "source_field": "from", "target_field": "to"}
 
-edgelist = convert_graph(graph, 'edgelist', context=context)
+edgelist = convert_graph(graph, "edgelist", context=context)
 print(f"Custom field names handled correctly:")
 print(f"  Converted edge list shape: {edgelist.shape}")
 

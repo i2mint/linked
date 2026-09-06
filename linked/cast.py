@@ -61,7 +61,7 @@ def _is_nodes_and_links_dict(obj: Any) -> bool:
     """Check if object is a nodes_and_links dict format."""
     if not isinstance(obj, dict):
         return False
-    return 'nodes' in obj and 'links' in obj
+    return "nodes" in obj and "links" in obj
 
 
 def _is_edgelist(obj: Any) -> bool:
@@ -83,7 +83,7 @@ def _is_minidot_string(obj: Any) -> bool:
     if not isinstance(obj, str):
         return False
     # Simple heuristic: contains '->' which is the mini-dot edge operator
-    return '->' in obj
+    return "->" in obj
 
 
 def _is_adjacency_matrix(obj: Any) -> bool:
@@ -94,11 +94,11 @@ def _is_adjacency_matrix(obj: Any) -> bool:
 
 
 # Register core graph kinds
-graph_transformer.add_node('nodes_and_links', isa=_is_nodes_and_links_dict)
-graph_transformer.add_node('edgelist', isa=_is_edgelist)
-graph_transformer.add_node('weighted_edgelist', isa=_is_weighted_edgelist)
-graph_transformer.add_node('minidot', isa=_is_minidot_string)
-graph_transformer.add_node('adjacency_matrix', isa=_is_adjacency_matrix)
+graph_transformer.add_node("nodes_and_links", isa=_is_nodes_and_links_dict)
+graph_transformer.add_node("edgelist", isa=_is_edgelist)
+graph_transformer.add_node("weighted_edgelist", isa=_is_weighted_edgelist)
+graph_transformer.add_node("minidot", isa=_is_minidot_string)
+graph_transformer.add_node("adjacency_matrix", isa=_is_adjacency_matrix)
 
 
 # ============================================================================
@@ -106,7 +106,7 @@ graph_transformer.add_node('adjacency_matrix', isa=_is_adjacency_matrix)
 # ============================================================================
 
 
-def _ensure_node_id_field(nodes: list, id_field: str = 'id') -> list:
+def _ensure_node_id_field(nodes: list, id_field: str = "id") -> list:
     """Ensure all nodes have an id field."""
     result = []
     for node in nodes:
@@ -124,18 +124,18 @@ def _ensure_node_id_field(nodes: list, id_field: str = 'id') -> list:
 def _normalize_nodes_and_links(
     obj: dict,
     *,
-    id_field: str = 'id',
-    source_field: str = 'source',
-    target_field: str = 'target'
+    id_field: str = "id",
+    source_field: str = "source",
+    target_field: str = "target"
 ) -> dict:
     """Normalize a nodes_and_links dict to standard field names."""
-    nodes = obj.get('nodes', [])
-    links = obj.get('links', [])
+    nodes = obj.get("nodes", [])
+    links = obj.get("links", [])
 
     # Ensure nodes have id field
     nodes = _ensure_node_id_field(nodes, id_field)
 
-    return {'nodes': nodes, 'links': links}
+    return {"nodes": nodes, "links": links}
 
 
 # ============================================================================
@@ -366,12 +366,12 @@ convert_graph.sources_for_kind = sources_for_kind
 # ============================================================================
 
 __all__ = [
-    'graph_transformer',
-    'convert_graph',
-    'graph_converter',
-    'graph_kinds',
-    'reachable_from_kind',
-    'sources_for_kind',
-    'register_kind',
-    'register_transformation',
+    "graph_transformer",
+    "convert_graph",
+    "graph_converter",
+    "graph_kinds",
+    "reachable_from_kind",
+    "sources_for_kind",
+    "register_kind",
+    "register_transformation",
 ]
