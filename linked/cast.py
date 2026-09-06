@@ -43,9 +43,10 @@ from contextlib import suppress
 from typing import Any
 import numpy as np
 
-# Import the TransformationGraph from i2.castgraph
-with suppress(ImportError, ModuleNotFoundError):
-    from i2.castgraph import TransformationGraph
+# Import the TransformationGraph from i2.castgraph. This one is required, not
+# optional: the registry below is built from it unconditionally, so suppressing
+# the import would only turn a clear ImportError into a puzzling NameError.
+from i2.castgraph import TransformationGraph
 
 # Create the global graph transformation registry
 graph_transformer = TransformationGraph()
