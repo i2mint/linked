@@ -6,18 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to linked’s documentation! &mdash; linked 0.0.5 documentation</title>
+  <title>Welcome to linked’s documentation! &mdash; linked 0.0.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=282f96c0"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
@@ -49,10 +49,17 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/cast.html">linked.cast</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/util.html">linked.util</a></li>
 </ul>
@@ -86,11 +93,81 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked.html">linked</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.convert_graph"><code class="docutils literal notranslate"><span class="pre">convert_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.epsilon_graph"><code class="docutils literal notranslate"><span class="pre">epsilon_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.graph_converter"><code class="docutils literal notranslate"><span class="pre">graph_converter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.graph_kinds"><code class="docutils literal notranslate"><span class="pre">graph_kinds()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.knn_graph"><code class="docutils literal notranslate"><span class="pre">knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">mutual_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.random_graph"><code class="docutils literal notranslate"><span class="pre">random_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.reachable_from_kind"><code class="docutils literal notranslate"><span class="pre">reachable_from_kind()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.sources_for_kind"><code class="docutils literal notranslate"><span class="pre">sources_for_kind()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/cast.html">linked.cast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#core-graph-kinds">Core graph kinds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#design">Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#example-usage">Example usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.convert_graph"><code class="docutils literal notranslate"><span class="pre">convert_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.graph_converter"><code class="docutils literal notranslate"><span class="pre">graph_converter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.graph_kinds"><code class="docutils literal notranslate"><span class="pre">graph_kinds()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.reachable_from_kind"><code class="docutils literal notranslate"><span class="pre">reachable_from_kind()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.register_kind"><code class="docutils literal notranslate"><span class="pre">register_kind()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.register_transformation"><code class="docutils literal notranslate"><span class="pre">register_transformation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.sources_for_kind"><code class="docutils literal notranslate"><span class="pre">sources_for_kind()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#kinds-defined-here">Kinds defined here</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#conversions">Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_list_to_edgelist"><code class="docutils literal notranslate"><span class="pre">adjacency_list_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_matrix_to_edgelist"><code class="docutils literal notranslate"><span class="pre">adjacency_matrix_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_matrix_to_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">adjacency_matrix_to_sparse_adjacency()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_adjacency_list"><code class="docutils literal notranslate"><span class="pre">edgelist_to_adjacency_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_adjacency_matrix"><code class="docutils literal notranslate"><span class="pre">edgelist_to_adjacency_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">edgelist_to_sparse_adjacency()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.sparse_adjacency_to_adjacency_matrix"><code class="docutils literal notranslate"><span class="pre">sparse_adjacency_to_adjacency_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.sparse_adjacency_to_edgelist"><code class="docutils literal notranslate"><span class="pre">sparse_adjacency_to_edgelist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#kinds-defined-here">Kinds defined here</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#conversions">Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edgelist_to_edges_dataframe"><code class="docutils literal notranslate"><span class="pre">edgelist_to_edges_dataframe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edges_dataframe_to_edgelist"><code class="docutils literal notranslate"><span class="pre">edges_dataframe_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edges_dataframe_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">edges_dataframe_to_nodes_and_links()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.graph_dataframes_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">graph_dataframes_to_nodes_and_links()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.nodes_and_links_to_edges_dataframe"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_edges_dataframe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.nodes_and_links_to_graph_dataframes"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_graph_dataframes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#kinds-defined-here">Kinds defined here</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#conversions">Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.edgelist_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">edgelist_to_nodes_and_links()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.edgelist_to_weighted_edgelist"><code class="docutils literal notranslate"><span class="pre">edgelist_to_weighted_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.nodes_and_links_to_edgelist"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.weighted_edgelist_to_edgelist"><code class="docutils literal notranslate"><span class="pre">weighted_edgelist_to_edgelist()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html#linked.datasrc.minidot.extract_nodes"><code class="docutils literal notranslate"><span class="pre">extract_nodes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html#linked.datasrc.minidot.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#kinds-defined-here">Kinds defined here</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#conversions">Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_digraph"><code class="docutils literal notranslate"><span class="pre">edgelist_to_networkx_digraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_graph"><code class="docutils literal notranslate"><span class="pre">edgelist_to_networkx_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_edgelist"><code class="docutils literal notranslate"><span class="pre">networkx_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">networkx_to_nodes_and_links()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_digraph"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_networkx_digraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_graph"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_networkx_graph()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a><ul>
@@ -105,6 +182,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_adjacency_conversions"><code class="docutils literal notranslate"><span class="pre">test_adjacency_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_auto_detection"><code class="docutils literal notranslate"><span class="pre">test_auto_detection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_context_parameters"><code class="docutils literal notranslate"><span class="pre">test_context_parameters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_core_kinds"><code class="docutils literal notranslate"><span class="pre">test_core_kinds()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_edgelist_conversions"><code class="docutils literal notranslate"><span class="pre">test_edgelist_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_imports"><code class="docutils literal notranslate"><span class="pre">test_imports()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_minidot_conversions"><code class="docutils literal notranslate"><span class="pre">test_minidot_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_multi_hop_conversion"><code class="docutils literal notranslate"><span class="pre">test_multi_hop_conversion()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_networkx_conversions"><code class="docutils literal notranslate"><span class="pre">test_networkx_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_pandas_conversions"><code class="docutils literal notranslate"><span class="pre">test_pandas_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_reachability"><code class="docutils literal notranslate"><span class="pre">test_reachability()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_round_trip_conversions"><code class="docutils literal notranslate"><span class="pre">test_round_trip_conversions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">test_sparse_adjacency()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_vectors_conversions"><code class="docutils literal notranslate"><span class="pre">test_vectors_conversions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">test_adaptive_knn_graph()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_edge_format"><code class="docutils literal notranslate"><span class="pre">test_edge_format()</span></code></a></li>
@@ -126,8 +221,8 @@
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-<p>Release: 0.0.5</p>
-<p>Last change: Oct 28, 2025</p>
+<p>Release: 0.0.6</p>
+<p>Last change: Sep 06, 2026</p>
 </section>
 
 
@@ -140,7 +235,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

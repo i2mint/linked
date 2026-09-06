@@ -1,0 +1,4 @@
+linked.cast
+===========
+.. automodule:: linked.cast
+   :members:

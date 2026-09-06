@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.datasrc.edgelist &mdash; linked 0.0.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="linked.datasrc.minidot" href="minidot.html" />
+    <link rel="prev" title="linked.datasrc.dataframes" href="dataframes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cast.html">linked.cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">linked.datasrc.edgelist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#kinds-defined-here">Kinds defined here</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conversions">Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.edgelist.edgelist_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">edgelist_to_nodes_and_links()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.edgelist.edgelist_to_weighted_edgelist"><code class="docutils literal notranslate"><span class="pre">edgelist_to_weighted_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.edgelist.nodes_and_links_to_edgelist"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_edgelist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.edgelist.weighted_edgelist_to_edgelist"><code class="docutils literal notranslate"><span class="pre">weighted_edgelist_to_edgelist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">linked.datasrc.edgelist</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/linked/datasrc/edgelist.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-linked.datasrc.edgelist">
+<span id="linked-datasrc-edgelist"></span><h1>linked.datasrc.edgelist<a class="headerlink" href="#module-linked.datasrc.edgelist" title="Link to this heading"></a></h1>
+<p>Edge list graph representations and conversions.</p>
+<p>An edge list is one of the most compact graph representations, consisting of
+an array of edges where each edge is [source, target] or [source, target, weight].</p>
+<section id="kinds-defined-here">
+<h2>Kinds defined here<a class="headerlink" href="#kinds-defined-here" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>‘edgelist’: numpy array (n_edges, 2) with integer node indices</p></li>
+<li><p>‘weighted_edgelist’: numpy array (n_edges, 3) with [source, target, weight]</p></li>
+</ul>
+</section>
+<section id="conversions">
+<h2>Conversions<a class="headerlink" href="#conversions" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>edgelist &lt;-&gt; nodes_and_links</p></li>
+<li><p>weighted_edgelist &lt;-&gt; nodes_and_links</p></li>
+<li><p>edgelist &lt;-&gt; weighted_edgelist (add/remove weights)</p></li>
+</ul>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.edgelist.edgelist_to_nodes_and_links">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.edgelist.</span></span><span class="sig-name descname"><span class="pre">edgelist_to_nodes_and_links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edgelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/edgelist.html#edgelist_to_nodes_and_links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.edgelist.edgelist_to_nodes_and_links" title="Link to this definition"></a></dt>
+<dd><p>Convert edge list to nodes_and_links dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edgelist</strong> (<em>np.ndarray</em>) – Array of shape (n_edges, 2) or (n_edges, 3)</p></li>
+<li><p><strong>ctx</strong> (<em>dict</em><em>, </em><em>optional</em>) – Context with optional keys:
+- ‘id_field’: field name for node id (default: ‘id’)
+- ‘source_field’: field name for edge source (default: ‘source’)
+- ‘target_field’: field name for edge target (default: ‘target’)
+- ‘weight_field’: field name for edge weight (default: ‘weight’)
+- ‘node_id_map’: dict mapping indices to node ids</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with ‘nodes’ and ‘links’ keys</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">edgelist_to_nodes_and_links</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'nodes'</span><span class="p">])</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.edgelist.edgelist_to_weighted_edgelist">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.edgelist.</span></span><span class="sig-name descname"><span class="pre">edgelist_to_weighted_edgelist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edgelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/edgelist.html#edgelist_to_weighted_edgelist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.edgelist.edgelist_to_weighted_edgelist" title="Link to this definition"></a></dt>
+<dd><p>Add default weights to an unweighted edge list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edgelist</strong> (<em>np.ndarray</em>) – Array of shape (n_edges, 2)</p></li>
+<li><p><strong>ctx</strong> (<em>dict</em><em>, </em><em>optional</em>) – Context with ‘default_weight’ key (default: 1.0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of shape (n_edges, 3)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">weighted</span> <span class="o">=</span> <span class="n">edgelist_to_weighted_edgelist</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">weighted</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(2, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">weighted</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.edgelist.nodes_and_links_to_edgelist">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.edgelist.</span></span><span class="sig-name descname"><span class="pre">nodes_and_links_to_edgelist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes_and_links</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/edgelist.html#nodes_and_links_to_edgelist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.edgelist.nodes_and_links_to_edgelist" title="Link to this definition"></a></dt>
+<dd><p>Convert nodes_and_links dict to edge list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes_and_links</strong> (<em>dict</em>) – Dict with ‘nodes’ and ‘links’ keys</p></li>
+<li><p><strong>ctx</strong> (<em>dict</em><em>, </em><em>optional</em>) – Context with optional keys:
+- ‘id_field’: field name for node id (default: ‘id’)
+- ‘source_field’: field name for edge source (default: ‘source’)
+- ‘target_field’: field name for edge target (default: ‘target’)
+- ‘weight_field’: field name for edge weight (default: ‘weight’)
+- ‘include_weights’: whether to include weights if present (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Edge list array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'nodes'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'1'</span><span class="p">}],</span> <span class="s1">'links'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'source'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">:</span> <span class="s1">'1'</span><span class="p">}]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">nodes_and_links_to_edgelist</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1, 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.datasrc.edgelist.weighted_edgelist_to_edgelist">
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.edgelist.</span></span><span class="sig-name descname"><span class="pre">weighted_edgelist_to_edgelist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weighted_edgelist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../../_modules/linked/datasrc/edgelist.html#weighted_edgelist_to_edgelist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.edgelist.weighted_edgelist_to_edgelist" title="Link to this definition"></a></dt>
+<dd><p>Remove weights from a weighted edge list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weighted_edgelist</strong> (<em>np.ndarray</em>) – Array of shape (n_edges, 3)</p></li>
+<li><p><strong>ctx</strong> (<em>dict</em><em>, </em><em>optional</em>) – Not used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of shape (n_edges, 2)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">weighted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">weighted_edgelist_to_edgelist</span><span class="p">(</span><span class="n">weighted</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(2, 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dataframes.html" class="btn btn-neutral float-left" title="linked.datasrc.dataframes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="minidot.html" class="btn btn-neutral float-right" title="linked.datasrc.minidot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

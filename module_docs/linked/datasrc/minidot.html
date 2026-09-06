@@ -6,26 +6,26 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>linked.datasrc.minidot &mdash; linked 0.0.5 documentation</title>
+  <title>linked.datasrc.minidot &mdash; linked 0.0.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=282f96c0"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="linked.datasrc.vectors" href="vectors.html" />
-    <link rel="prev" title="linked.datasrc" href="../datasrc.html" /> 
+    <link rel="next" title="linked.datasrc.networkx_graphs" href="networkx_graphs.html" />
+    <link rel="prev" title="linked.datasrc.edgelist" href="edgelist.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,14 +50,21 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cast.html">linked.cast</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="edgelist.html">linked.datasrc.edgelist</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">linked.datasrc.minidot</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.minidot.extract_nodes"><code class="docutils literal notranslate"><span class="pre">extract_nodes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#linked.datasrc.minidot.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectors.html">linked.datasrc.vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tests/test_vectors.html">linked.tests.test_vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">linked.util</a></li>
 </ul>
@@ -97,25 +104,25 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="linked.datasrc.minidot.mini_dot_to_graph_jdict">
-<span class="sig-prename descclassname"><span class="pre">linked.datasrc.minidot.</span></span><span class="sig-name descname"><span class="pre">mini_dot_to_graph_jdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mini_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'id':</span> <span class="pre">'id',</span> <span class="pre">'links':</span> <span class="pre">'links',</span> <span class="pre">'nodes':</span> <span class="pre">'nodes',</span> <span class="pre">'source':</span> <span class="pre">'source',</span> <span class="pre">'target':</span> <span class="pre">'target'}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/linked/datasrc/minidot.html#mini_dot_to_graph_jdict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.minidot.mini_dot_to_graph_jdict" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">linked.datasrc.minidot.</span></span><span class="sig-name descname"><span class="pre">mini_dot_to_graph_jdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mini_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'id':</span> <span class="pre">'id',</span> <span class="pre">'links':</span> <span class="pre">'links',</span> <span class="pre">'nodes':</span> <span class="pre">'nodes',</span> <span class="pre">'source':</span> <span class="pre">'source',</span> <span class="pre">'target':</span> <span class="pre">'target'}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/linked/datasrc/minidot.html#mini_dot_to_graph_jdict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.datasrc.minidot.mini_dot_to_graph_jdict" title="Link to this definition"></a></dt>
 <dd><p>Make a graph json dict from a mini-dot string.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">'''</span>
 <span class="gp">... </span><span class="s1">1 -&gt; 2</span>
 <span class="gp">... </span><span class="s1">2, 3 -&gt; 5, 6, 7</span>
-<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>  
-<span class="go">{&#39;nodes&#39;: [{&#39;id&#39;: &#39;1&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;2&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;7&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;3&#39;}],</span>
-<span class="go">&#39;links&#39;: [{&#39;source&#39;: &#39;1&#39;, &#39;target&#39;: &#39;2&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;7&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;7&#39;}]}</span>
+<span class="gp">... </span><span class="s1">'''</span><span class="p">)</span>
+<span class="go">{'nodes': [{'id': '1'},</span>
+<span class="go">{'id': '2'},</span>
+<span class="go">{'id': '5'},</span>
+<span class="go">{'id': '6'},</span>
+<span class="go">{'id': '7'},</span>
+<span class="go">{'id': '3'}],</span>
+<span class="go">'links': [{'source': '1', 'target': '2'},</span>
+<span class="go">{'source': '2', 'target': '5'},</span>
+<span class="go">{'source': '2', 'target': '6'},</span>
+<span class="go">{'source': '2', 'target': '7'},</span>
+<span class="go">{'source': '3', 'target': '5'},</span>
+<span class="go">{'source': '3', 'target': '6'},</span>
+<span class="go">{'source': '3', 'target': '7'}]}</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -126,14 +133,14 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../datasrc.html" class="btn btn-neutral float-left" title="linked.datasrc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="vectors.html" class="btn btn-neutral float-right" title="linked.datasrc.vectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="edgelist.html" class="btn btn-neutral float-left" title="linked.datasrc.edgelist" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="networkx_graphs.html" class="btn btn-neutral float-right" title="linked.datasrc.networkx_graphs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

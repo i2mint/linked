@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.tests.test_cast &mdash; linked 0.0.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/cast.html">linked.cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">linked.tests.test_cast</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for linked.tests.test_cast</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Tests for linked.cast graph conversion system.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<span class="c1"># Test basic imports</span>
+<div class="viewcode-block" id="test_imports">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_imports">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_imports</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test that cast module can be imported."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Testing imports..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">cast</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_transformer</span><span class="p">,</span> <span class="n">convert_graph</span><span class="p">,</span> <span class="n">graph_kinds</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Import tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_core_kinds">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_core_kinds">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_core_kinds</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test that core graph kinds are registered."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing core kinds registration..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_kinds</span>
+
+    <span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Registered kinds: </span><span class="si">{</span><span class="n">kinds</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Core kinds should be present</span>
+    <span class="n">core_kinds</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'nodes_and_links'</span><span class="p">,</span>
+        <span class="s1">'edgelist'</span><span class="p">,</span>
+        <span class="s1">'weighted_edgelist'</span><span class="p">,</span>
+        <span class="s1">'minidot'</span><span class="p">,</span>
+        <span class="s1">'adjacency_matrix'</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">assert</span> <span class="n">core_kinds</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">kinds</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"Missing core kinds: </span><span class="si">{</span><span class="n">core_kinds</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kinds</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Core kinds tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_minidot_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_minidot_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_minidot_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test mini-dot conversions."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing mini-dot conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Test mini-dot -&gt; nodes_and_links</span>
+    <span class="n">minidot_str</span> <span class="o">=</span> <span class="s2">"1 -&gt; 2</span><span class="se">\n</span><span class="s2">2 -&gt; 3"</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">minidot_str</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'minidot'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"Result should have 'nodes' key"</span>
+    <span class="k">assert</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"Result should have 'links' key"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'nodes'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Should have 3 nodes, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'nodes'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Should have 2 links, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Mini-dot conversion tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_edgelist_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_edgelist_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_edgelist_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test edge list conversions."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing edge list conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Create test edge list</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="c1"># Convert to nodes_and_links</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"Result should have nodes"</span>
+    <span class="k">assert</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"Result should have links"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'nodes'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 nodes"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 links"</span>
+
+    <span class="c1"># Test weighted edge list</span>
+    <span class="n">weighted_edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+        <span class="n">weighted_edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'weighted_edgelist'</span>
+    <span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should have 2 links"</span>
+    <span class="c1"># Check that weights are preserved</span>
+    <span class="k">assert</span> <span class="s1">'weight'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">'links'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"Links should have weight field"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Edge list conversion tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_adjacency_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_adjacency_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_adjacency_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test adjacency matrix/list conversions."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing adjacency conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Create adjacency matrix</span>
+    <span class="n">adj_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="c1"># Convert to edge list</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'adjacency_matrix'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"Should have edges"</span>
+    <span class="k">assert</span> <span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should be unweighted edgelist"</span>
+
+    <span class="c1"># Test adjacency list</span>
+    <span class="n">adj_list</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'adjacency_list'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 edges"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Adjacency conversion tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_multi_hop_conversion">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_multi_hop_conversion">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_multi_hop_conversion</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test multi-hop conversions through the graph."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing multi-hop conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Test mini-dot -&gt; edgelist (should go through nodes_and_links)</span>
+    <span class="n">minidot_str</span> <span class="o">=</span> <span class="s2">"1 -&gt; 2</span><span class="se">\n</span><span class="s2">2 -&gt; 3"</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">minidot_str</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'minidot'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should have 2 edges"</span>
+
+    <span class="c1"># Test edgelist -&gt; adjacency_matrix</span>
+    <span class="n">adj_matrix</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'adjacency_matrix'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should be 2D"</span>
+    <span class="k">assert</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">adj_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">"Should be square"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Multi-hop conversion tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_networkx_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_networkx_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_networkx_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test NetworkX conversions if available."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing NetworkX conversions..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span><span class="p">,</span> <span class="n">graph_kinds</span>
+
+        <span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">'networkx_graph'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kinds</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ NetworkX kinds not registered (networkx may not be installed)"</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Create a NetworkX graph</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+
+        <span class="c1"># Convert to edge list</span>
+        <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'networkx_graph'</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Should have 3 edges, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+
+        <span class="c1"># Convert edge list back to NetworkX</span>
+        <span class="n">G2</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">G2</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">),</span> <span class="s2">"Should return NetworkX Graph"</span>
+        <span class="k">assert</span> <span class="n">G2</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 edges"</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ NetworkX conversion tests passed"</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ NetworkX not available, skipping NetworkX tests"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_pandas_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_pandas_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_pandas_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test pandas DataFrame conversions if available."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing pandas DataFrame conversions..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span><span class="p">,</span> <span class="n">graph_kinds</span>
+
+        <span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">'edges_dataframe'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kinds</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ DataFrame kinds not registered (pandas may not be installed)"</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Create edges DataFrame</span>
+        <span class="n">edges_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'source'</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">'target'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]})</span>
+
+        <span class="c1"># Convert to edge list</span>
+        <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edges_df</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edges_dataframe'</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 edges"</span>
+
+        <span class="c1"># Convert edge list back to DataFrame</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'edges_dataframe'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">),</span> <span class="s2">"Should return DataFrame"</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should have 3 rows"</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="s1">'source'</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">'target'</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span>
+        <span class="p">),</span> <span class="s2">"Should have source/target columns"</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Pandas DataFrame conversion tests passed"</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ Pandas not available, skipping DataFrame tests"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_vectors_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_vectors_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_vectors_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test vectors -&gt; graph conversions."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing vectors conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span><span class="p">,</span> <span class="n">graph_kinds</span>
+
+    <span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">'vectors'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kinds</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ Vectors kind not registered"</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Create random vectors</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># Convert to weighted edge list using k-NN</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+            <span class="n">vectors</span><span class="p">,</span>
+            <span class="s1">'weighted_edgelist'</span><span class="p">,</span>
+            <span class="n">from_kind</span><span class="o">=</span><span class="s1">'vectors'</span><span class="p">,</span>
+            <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">'n_neighbors'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+        <span class="k">assert</span> <span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Should be weighted (3 columns)"</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">3</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">"Should have 60 edges (20 nodes * 3 neighbors), got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Vectors conversion tests passed"</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"⊘ Vectors conversion failed (missing dependency): </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_round_trip_conversions">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_round_trip_conversions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_round_trip_conversions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test round-trip conversions (A -&gt; B -&gt; A)."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing round-trip conversions..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Test edge list round trip</span>
+    <span class="n">original_edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="c1"># edgelist -&gt; nodes_and_links -&gt; edgelist</span>
+    <span class="n">intermediate</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+        <span class="n">original_edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span>
+    <span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">intermediate</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'nodes_and_links'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should have 2 columns"</span>
+
+    <span class="c1"># Test adjacency matrix round trip</span>
+    <span class="n">original_adj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="c1"># adjacency_matrix -&gt; edgelist -&gt; adjacency_matrix</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">original_adj</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'adjacency_matrix'</span><span class="p">)</span>
+    <span class="n">result_adj</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'adjacency_matrix'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result_adj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="n">result_adj</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">original_adj</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">"Should have same shape"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Round-trip conversion tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_context_parameters">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_context_parameters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_context_parameters</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test that context parameters are used correctly."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing context parameters..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Test custom field names for nodes_and_links -&gt; edgelist</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'nodes'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'a'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'b'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'c'</span><span class="p">}],</span>
+        <span class="s1">'links'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'source'</span><span class="p">:</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">:</span> <span class="s1">'b'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'source'</span><span class="p">:</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">:</span> <span class="s1">'c'</span><span class="p">}],</span>
+    <span class="p">}</span>
+
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+        <span class="n">graph</span><span class="p">,</span>
+        <span class="s1">'edgelist'</span><span class="p">,</span>
+        <span class="n">from_kind</span><span class="o">=</span><span class="s1">'nodes_and_links'</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">'id_field'</span><span class="p">:</span> <span class="s1">'id'</span><span class="p">,</span> <span class="s1">'source_field'</span><span class="p">:</span> <span class="s1">'source'</span><span class="p">,</span> <span class="s1">'target_field'</span><span class="p">:</span> <span class="s1">'target'</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"Should have 2 edges"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Context parameter tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_auto_detection">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_auto_detection">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_auto_detection</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test automatic kind detection."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing automatic kind detection..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+
+    <span class="c1"># Test with edge list (should auto-detect)</span>
+    <span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">)</span>  <span class="c1"># No from_kind</span>
+
+    <span class="k">assert</span> <span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">,</span> <span class="s2">"Should detect edgelist and convert"</span>
+
+    <span class="c1"># Test with nodes_and_links dict</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'nodes'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="s1">'1'</span><span class="p">}],</span>
+        <span class="s1">'links'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'source'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">:</span> <span class="s1">'1'</span><span class="p">}],</span>
+    <span class="p">}</span>
+    <span class="n">edgelist_result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">)</span>  <span class="c1"># No from_kind</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">edgelist_result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">),</span> <span class="s2">"Should detect nodes_and_links and convert"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Auto-detection tests passed"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_sparse_adjacency">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_sparse_adjacency">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_sparse_adjacency</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test sparse adjacency matrix conversions if scipy is available."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing sparse adjacency conversions..."</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">sparse</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span><span class="p">,</span> <span class="n">graph_kinds</span>
+
+        <span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">'sparse_adjacency'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kinds</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ Sparse adjacency kind not registered"</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Create sparse matrix</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">sparse_adj</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+        <span class="c1"># Convert to edge list</span>
+        <span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">sparse_adj</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'sparse_adjacency'</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="s2">"Should return numpy array"</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"Should have edges"</span>
+
+        <span class="c1"># Convert back to sparse</span>
+        <span class="n">sparse_result</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+            <span class="n">edgelist</span><span class="p">,</span> <span class="s1">'sparse_adjacency'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'edgelist'</span>
+        <span class="p">)</span>
+
+        <span class="k">assert</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">sparse_result</span><span class="p">),</span> <span class="s2">"Should return sparse matrix"</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Sparse adjacency conversion tests passed"</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⊘ Scipy not available, skipping sparse adjacency tests"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_reachability">
+<a class="viewcode-back" href="../../../module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_reachability">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_reachability</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Test reachability queries."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Testing reachability queries..."</span><span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">reachable_from_kind</span><span class="p">,</span> <span class="n">sources_for_kind</span>
+
+    <span class="c1"># Test reachable from edgelist</span>
+    <span class="n">reachable</span> <span class="o">=</span> <span class="n">reachable_from_kind</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="s1">'nodes_and_links'</span> <span class="ow">in</span> <span class="n">reachable</span>
+    <span class="p">),</span> <span class="s2">"Should be able to reach nodes_and_links from edgelist"</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="s1">'adjacency_matrix'</span> <span class="ow">in</span> <span class="n">reachable</span>
+    <span class="p">),</span> <span class="s2">"Should be able to reach adjacency_matrix from edgelist"</span>
+
+    <span class="c1"># Test sources for edgelist</span>
+    <span class="n">sources</span> <span class="o">=</span> <span class="n">sources_for_kind</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="s1">'nodes_and_links'</span> <span class="ow">in</span> <span class="n">sources</span>
+    <span class="p">),</span> <span class="s2">"Should be able to convert from nodes_and_links to edgelist"</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="s1">'adjacency_matrix'</span> <span class="ow">in</span> <span class="n">sources</span>
+    <span class="p">),</span> <span class="s2">"Should be able to convert from adjacency_matrix to edgelist"</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Reachability tests passed"</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Running tests for linked.cast..."</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="n">test_imports</span><span class="p">()</span>
+    <span class="n">test_core_kinds</span><span class="p">()</span>
+    <span class="n">test_minidot_conversions</span><span class="p">()</span>
+    <span class="n">test_edgelist_conversions</span><span class="p">()</span>
+    <span class="n">test_adjacency_conversions</span><span class="p">()</span>
+    <span class="n">test_multi_hop_conversion</span><span class="p">()</span>
+    <span class="n">test_networkx_conversions</span><span class="p">()</span>
+    <span class="n">test_pandas_conversions</span><span class="p">()</span>
+    <span class="n">test_vectors_conversions</span><span class="p">()</span>
+    <span class="n">test_round_trip_conversions</span><span class="p">()</span>
+    <span class="n">test_context_parameters</span><span class="p">()</span>
+    <span class="n">test_auto_detection</span><span class="p">()</span>
+    <span class="n">test_sparse_adjacency</span><span class="p">()</span>
+    <span class="n">test_reachability</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"All tests completed! ✓"</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

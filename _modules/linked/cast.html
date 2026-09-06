@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.cast &mdash; linked 0.0.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/cast.html">linked.cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/linked/util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">linked.cast</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for linked.cast</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Graph representation conversion system using castgraph.</span>
+
+<span class="sd">This module provides a centralized TransformationGraph for converting between</span>
+<span class="sd">various graph data representations. Each datasrc module registers its transformations</span>
+<span class="sd">here, creating a unified conversion service.</span>
+
+<span class="sd">Core graph kinds</span>
+<span class="sd">----------------</span>
+<span class="sd">- 'nodes_and_links': Dict with 'nodes' and 'links' keys (standard JSON graph format)</span>
+<span class="sd">- 'edgelist': numpy array of shape (n_edges, 2) with [source, target] indices</span>
+<span class="sd">- 'weighted_edgelist': numpy array of shape (n_edges, 3) with [source, target, weight]</span>
+<span class="sd">- 'minidot': String in mini-dot format (e.g., "1 -&gt; 2\\n2, 3 -&gt; 5")</span>
+<span class="sd">- 'adjacency_matrix': Dense numpy array of shape (n_nodes, n_nodes)</span>
+<span class="sd">- 'sparse_adjacency': scipy sparse matrix</span>
+<span class="sd">- 'adjacency_list': Dict mapping node indices to lists of neighbors</span>
+<span class="sd">- 'networkx_graph': NetworkX Graph object</span>
+<span class="sd">- 'networkx_digraph': NetworkX DiGraph object</span>
+<span class="sd">- 'edges_dataframe': pandas DataFrame with source/target columns</span>
+<span class="sd">- 'nodes_dataframe': pandas DataFrame with node metadata</span>
+<span class="sd">- 'graph_dataframes': Dict with 'edges' and 'nodes' DataFrames</span>
+
+<span class="sd">Design</span>
+<span class="sd">------</span>
+<span class="sd">Each datasrc module should:</span>
+<span class="sd">1. Define kind predicates (isa functions) for its graph representations</span>
+<span class="sd">2. Register transformations to/from at least one "hub" format (typically 'nodes_and_links' or 'edgelist')</span>
+<span class="sd">3. Use contextlib.suppress to gracefully handle missing dependencies</span>
+
+<span class="sd">Example usage</span>
+<span class="sd">-------------</span>
+<span class="sd">&gt;&gt;&gt; from linked.cast import graph_transformer</span>
+<span class="sd">&gt;&gt;&gt; # Convert mini-dot string to NetworkX graph</span>
+<span class="sd">&gt;&gt;&gt; minidot = "1 -&gt; 2\\n2, 3 -&gt; 5, 6"</span>
+<span class="sd">&gt;&gt;&gt; nx_graph = graph_transformer.transform_any(minidot, 'networkx_graph')</span>
+
+<span class="sd">&gt;&gt;&gt; # Get a transformer function for repeated conversions</span>
+<span class="sd">&gt;&gt;&gt; to_edgelist = graph_transformer.get_transformer('minidot', 'edgelist')</span>
+<span class="sd">&gt;&gt;&gt; edgelist = to_edgelist(minidot)</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Import the TransformationGraph from i2.castgraph. This one is required, not</span>
+<span class="c1"># optional: the registry below is built from it unconditionally, so suppressing</span>
+<span class="c1"># the import would only turn a clear ImportError into a puzzling NameError.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">i2.castgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformationGraph</span>
+
+<span class="c1"># Create the global graph transformation registry</span>
+<span class="n">graph_transformer</span> <span class="o">=</span> <span class="n">TransformationGraph</span><span class="p">()</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Core kind predicates (basic graph representations)</span>
+<span class="c1"># ============================================================================</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_nodes_and_links_dict</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if object is a nodes_and_links dict format."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">obj</span> <span class="ow">and</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">obj</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_edgelist</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if object is an edge list (2-column numpy array)."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_weighted_edgelist</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if object is a weighted edge list (3-column numpy array)."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_minidot_string</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if object is a mini-dot format string."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># Simple heuristic: contains '-&gt;' which is the mini-dot edge operator</span>
+    <span class="k">return</span> <span class="s1">'-&gt;'</span> <span class="ow">in</span> <span class="n">obj</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_adjacency_matrix</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Check if object is a dense adjacency matrix."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="c1"># Register core graph kinds</span>
+<span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_nodes_and_links_dict</span><span class="p">)</span>
+<span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_edgelist</span><span class="p">)</span>
+<span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">'weighted_edgelist'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_weighted_edgelist</span><span class="p">)</span>
+<span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">'minidot'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_minidot_string</span><span class="p">)</span>
+<span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s1">'adjacency_matrix'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_adjacency_matrix</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Utility functions for converters</span>
+<span class="c1"># ============================================================================</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_node_id_field</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'id'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Ensure all nodes have an id field."""</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">id_field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+                <span class="c1"># Try to infer id from other fields or use index</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="o">**</span><span class="n">node</span><span class="p">}</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Convert bare values to dict with id</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)})</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_nodes_and_links</span><span class="p">(</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'id'</span><span class="p">,</span>
+    <span class="n">source_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'source'</span><span class="p">,</span>
+    <span class="n">target_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'target'</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Normalize a nodes_and_links dict to standard field names."""</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'nodes'</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'links'</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="c1"># Ensure nodes have id field</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">_ensure_node_id_field</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">id_field</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">'nodes'</span><span class="p">:</span> <span class="n">nodes</span><span class="p">,</span> <span class="s1">'links'</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Conversion hooks for datasrc modules to register themselves</span>
+<span class="c1"># ============================================================================</span>
+
+
+<div class="viewcode-block" id="register_kind">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.register_kind">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_kind</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">isa</span><span class="p">:</span> <span class="nb">callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Register a new graph kind with optional predicate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kind : str</span>
+<span class="sd">        The kind identifier</span>
+<span class="sd">    isa : callable, optional</span>
+<span class="sd">        Predicate function to detect if an object is of this kind</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; with suppress(Exception):</span>
+<span class="sd">    ...     register_kind('my_format', lambda x: isinstance(x, MyFormat))</span>
+<span class="sd">    """</span>
+    <span class="n">graph_transformer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">isa</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="register_transformation">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.register_transformation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_transformation</span><span class="p">(</span><span class="n">src_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dst_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cost</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Decorator to register a transformation between graph kinds.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    src_kind : str</span>
+<span class="sd">        Source graph kind</span>
+<span class="sd">    dst_kind : str</span>
+<span class="sd">        Destination graph kind</span>
+<span class="sd">    cost : float</span>
+<span class="sd">        Cost of this transformation (lower = preferred)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; @register_transformation('my_format', 'edgelist')</span>
+<span class="sd">    ... def my_format_to_edgelist(obj, ctx):</span>
+<span class="sd">    ...     return convert_to_edgelist(obj)</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">src_kind</span><span class="p">,</span> <span class="n">dst_kind</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Module loading: Import datasrc modules to trigger their registrations</span>
+<span class="c1"># ============================================================================</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_datasrc_modules</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Import all datasrc modules to trigger their converter registrations.</span>
+
+<span class="sd">    Uses suppress to gracefully handle missing dependencies.</span>
+<span class="sd">    """</span>
+    <span class="c1"># Import order matters - hub formats first</span>
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">edgelist</span>  <span class="c1"># Core edge list conversions</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">minidot</span>  <span class="c1"># Mini-dot conversions (already exists)</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">vectors</span>  <span class="c1"># Vector-based graph construction</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">networkx_graphs</span>  <span class="c1"># NetworkX conversions</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataframes</span>  <span class="c1"># Pandas DataFrame conversions</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">linked.datasrc</span><span class="w"> </span><span class="kn">import</span> <span class="n">adjacency</span>  <span class="c1"># Adjacency matrix/list conversions</span>
+
+
+<span class="c1"># Load all datasrc modules on import</span>
+<span class="n">_load_datasrc_modules</span><span class="p">()</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Convenience functions</span>
+<span class="c1"># ============================================================================</span>
+
+
+<div class="viewcode-block" id="convert_graph">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.convert_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_graph</span><span class="p">(</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">to_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">from_kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Convert a graph from one representation to another.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : Any</span>
+<span class="sd">        The graph object to convert</span>
+<span class="sd">    to_kind : str</span>
+<span class="sd">        The target graph kind</span>
+<span class="sd">    from_kind : str, optional</span>
+<span class="sd">        The source graph kind (auto-detected if None)</span>
+<span class="sd">    context : dict, optional</span>
+<span class="sd">        Additional context for the conversion (e.g., column names, field mappings)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        The converted graph object</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; minidot = "1 -&gt; 2\\n2 -&gt; 3"</span>
+<span class="sd">    &gt;&gt;&gt; graph = convert_graph(minidot, 'nodes_and_links')</span>
+<span class="sd">    &gt;&gt;&gt; 'nodes' in graph and 'links' in graph</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">from_kind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">transform_any</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">to_kind</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+            <span class="n">obj</span><span class="p">,</span> <span class="n">to_kind</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="n">from_kind</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="graph_converter">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.graph_converter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">graph_converter</span><span class="p">(</span><span class="n">from_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get a converter function for repeated conversions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    from_kind : str</span>
+<span class="sd">        Source graph kind</span>
+<span class="sd">    to_kind : str</span>
+<span class="sd">        Destination graph kind</span>
+<span class="sd">    context : dict, optional</span>
+<span class="sd">        Context to bake into the converter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    callable</span>
+<span class="sd">        A function that converts graphs from from_kind to to_kind</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; to_edgelist = graph_converter('minidot', 'edgelist')</span>
+<span class="sd">    &gt;&gt;&gt; edgelist = to_edgelist("1 -&gt; 2")</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">get_transformer</span><span class="p">(</span><span class="n">from_kind</span><span class="p">,</span> <span class="n">to_kind</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="graph_kinds">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.graph_kinds">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">graph_kinds</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    List all registered graph kinds.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    set</span>
+<span class="sd">        Set of all registered graph kind identifiers</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; kinds = graph_kinds()</span>
+<span class="sd">    &gt;&gt;&gt; 'nodes_and_links' in kinds</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">kinds</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="reachable_from_kind">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.reachable_from_kind">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reachable_from_kind</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get all graph kinds reachable from a given kind.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kind : str</span>
+<span class="sd">        The source graph kind</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    set</span>
+<span class="sd">        Set of reachable graph kind identifiers</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; reachable = reachable_from_kind('minidot')</span>
+<span class="sd">    &gt;&gt;&gt; 'nodes_and_links' in reachable</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">reachable_from</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sources_for_kind">
+<a class="viewcode-back" href="../../module_docs/linked/cast.html#linked.sources_for_kind">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sources_for_kind</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get all graph kinds that can be converted to a given kind.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kind : str</span>
+<span class="sd">        The target graph kind</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    set</span>
+<span class="sd">        Set of source graph kind identifiers</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; sources = sources_for_kind('edgelist')</span>
+<span class="sd">    &gt;&gt;&gt; len(sources) &gt;= 0</span>
+<span class="sd">    True</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">graph_transformer</span><span class="o">.</span><span class="n">sources_for</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Attach utility functions to convert_graph for convenient access</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="n">convert_graph</span><span class="o">.</span><span class="n">graph_kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span>
+<span class="n">convert_graph</span><span class="o">.</span><span class="n">graph_converter</span> <span class="o">=</span> <span class="n">graph_converter</span>
+<span class="n">convert_graph</span><span class="o">.</span><span class="n">reachable_from_kind</span> <span class="o">=</span> <span class="n">reachable_from_kind</span>
+<span class="n">convert_graph</span><span class="o">.</span><span class="n">sources_for_kind</span> <span class="o">=</span> <span class="n">sources_for_kind</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Export public API</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'graph_transformer'</span><span class="p">,</span>
+    <span class="s1">'convert_graph'</span><span class="p">,</span>
+    <span class="s1">'graph_converter'</span><span class="p">,</span>
+    <span class="s1">'graph_kinds'</span><span class="p">,</span>
+    <span class="s1">'reachable_from_kind'</span><span class="p">,</span>
+    <span class="s1">'sources_for_kind'</span><span class="p">,</span>
+    <span class="s1">'register_kind'</span><span class="p">,</span>
+    <span class="s1">'register_transformation'</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

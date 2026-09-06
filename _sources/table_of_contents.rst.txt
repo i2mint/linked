@@ -3,9 +3,16 @@
    :caption: Contents:
 
    module_docs/linked
+   module_docs/linked/cast
    module_docs/linked/datasrc
+   module_docs/linked/datasrc/adjacency
+   module_docs/linked/datasrc/dataframes
+   module_docs/linked/datasrc/edgelist
    module_docs/linked/datasrc/minidot
+   module_docs/linked/datasrc/networkx_graphs
    module_docs/linked/datasrc/vectors
    module_docs/linked/tests
+   module_docs/linked/tests/test_cast
+   module_docs/linked/tests/test_import_hygiene
    module_docs/linked/tests/test_vectors
    module_docs/linked/util

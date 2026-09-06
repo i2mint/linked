@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linked.datasrc.networkx_graphs &mdash; linked 0.0.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            linked
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked.html">linked</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/cast.html">linked.cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/linked/util.html">linked.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">linked</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">linked.datasrc.networkx_graphs</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for linked.datasrc.networkx_graphs</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">NetworkX graph representations and conversions.</span>
+
+<span class="sd">NetworkX is one of the most popular Python graph libraries, supporting both</span>
+<span class="sd">undirected (Graph) and directed (DiGraph) graphs with extensive algorithms.</span>
+
+<span class="sd">Kinds defined here</span>
+<span class="sd">------------------</span>
+<span class="sd">- 'networkx_graph': networkx.Graph (undirected)</span>
+<span class="sd">- 'networkx_digraph': networkx.DiGraph (directed)</span>
+
+<span class="sd">Conversions</span>
+<span class="sd">-----------</span>
+<span class="sd">- networkx graphs &lt;-&gt; edgelist</span>
+<span class="sd">- networkx graphs &lt;-&gt; nodes_and_links</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Try to import networkx - only register if available</span>
+<span class="n">_has_networkx</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+
+    <span class="n">_has_networkx</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Only register if both networkx and cast are available</span>
+<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">linked.cast</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_kind</span><span class="p">,</span> <span class="n">register_transformation</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Kind predicates</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="k">if</span> <span class="n">_has_networkx</span><span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_networkx_graph</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Check if object is a NetworkX Graph."""</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_networkx_digraph</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Check if object is a NetworkX DiGraph."""</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">)</span>
+
+    <span class="c1"># Register kinds</span>
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="n">register_kind</span><span class="p">(</span><span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_networkx_graph</span><span class="p">)</span>
+        <span class="n">register_kind</span><span class="p">(</span><span class="s1">'networkx_digraph'</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_networkx_digraph</span><span class="p">)</span>
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># NetworkX &lt;-&gt; edge list conversions</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="k">if</span> <span class="n">_has_networkx</span><span class="p">:</span>
+
+<div class="viewcode-block" id="networkx_to_edgelist">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_edgelist">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">networkx_to_edgelist</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert NetworkX graph to edge list.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph : nx.Graph or nx.DiGraph</span>
+<span class="sd">            NetworkX graph object</span>
+<span class="sd">        ctx : dict, optional</span>
+<span class="sd">            Context with optional keys:</span>
+<span class="sd">            - 'weight_attr': attribute name for edge weight (default: 'weight')</span>
+<span class="sd">            - 'include_weights': whether to include weights (default: auto-detect)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Edge list array</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; G = nx.Graph()</span>
+<span class="sd">        &gt;&gt;&gt; G.add_edges_from([(0, 1), (1, 2)])</span>
+<span class="sd">        &gt;&gt;&gt; edgelist = networkx_to_edgelist(G)</span>
+<span class="sd">        &gt;&gt;&gt; edgelist.shape[0] == 2</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">weight_attr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'weight_attr'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">)</span>
+        <span class="n">include_weights</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'include_weights'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="c1"># Auto-detect if weights should be included</span>
+        <span class="k">if</span> <span class="n">include_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Check if any edge has weight attribute</span>
+            <span class="n">include_weights</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">weight_attr</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Build node to index mapping</span>
+        <span class="n">node_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">())}</span>
+
+        <span class="c1"># Extract edges</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">src_idx</span> <span class="o">=</span> <span class="n">node_to_idx</span><span class="p">[</span><span class="n">src</span><span class="p">]</span>
+            <span class="n">tgt_idx</span> <span class="o">=</span> <span class="n">node_to_idx</span><span class="p">[</span><span class="n">tgt</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">include_weights</span><span class="p">:</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">weight_attr</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">src_idx</span><span class="p">,</span> <span class="n">tgt_idx</span><span class="p">,</span> <span class="n">weight</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">src_idx</span><span class="p">,</span> <span class="n">tgt_idx</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="k">if</span> <span class="n">edges</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">include_weights</span> <span class="k">else</span> <span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="edgelist_to_networkx_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edgelist_to_networkx_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert edge list to NetworkX undirected graph.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        edgelist : np.ndarray</span>
+<span class="sd">            Edge list array of shape (n_edges, 2) or (n_edges, 3)</span>
+<span class="sd">        ctx : dict, optional</span>
+<span class="sd">            Context with optional keys:</span>
+<span class="sd">            - 'weight_attr': attribute name for edge weight (default: 'weight')</span>
+<span class="sd">            - 'node_id_map': dict mapping indices to node ids</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nx.Graph</span>
+<span class="sd">            NetworkX undirected graph</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; edgelist = np.array([[0, 1], [1, 2]])</span>
+<span class="sd">        &gt;&gt;&gt; G = edgelist_to_networkx_graph(edgelist)</span>
+<span class="sd">        &gt;&gt;&gt; G.number_of_nodes()</span>
+<span class="sd">        3</span>
+<span class="sd">        """</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">weight_attr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'weight_attr'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">)</span>
+        <span class="n">node_id_map</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'node_id_map'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="c1"># Add nodes</span>
+        <span class="n">node_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">edgelist</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">node_id_map</span><span class="p">:</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">node_indices</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">node_indices</span><span class="p">)</span>
+
+        <span class="c1"># Add edges</span>
+        <span class="n">has_weights</span> <span class="o">=</span> <span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edgelist</span><span class="p">:</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">tgt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">node_id_map</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+                <span class="n">tgt</span> <span class="o">=</span> <span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tgt</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">has_weights</span><span class="p">:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">weight_attr</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">2</span><span class="p">])})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">G</span></div>
+
+
+<div class="viewcode-block" id="edgelist_to_networkx_digraph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_digraph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edgelist_to_networkx_digraph</span><span class="p">(</span>
+        <span class="n">edgelist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert edge list to NetworkX directed graph.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        edgelist : np.ndarray</span>
+<span class="sd">            Edge list array</span>
+<span class="sd">        ctx : dict, optional</span>
+<span class="sd">            Context (same as edgelist_to_networkx_graph)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nx.DiGraph</span>
+<span class="sd">            NetworkX directed graph</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; edgelist = np.array([[0, 1], [1, 2]])</span>
+<span class="sd">        &gt;&gt;&gt; G = edgelist_to_networkx_digraph(edgelist)</span>
+<span class="sd">        &gt;&gt;&gt; G.is_directed()</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">weight_attr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'weight_attr'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">)</span>
+        <span class="n">node_id_map</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'node_id_map'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">G</span>
+
+        <span class="c1"># Add nodes</span>
+        <span class="n">node_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">edgelist</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">node_id_map</span><span class="p">:</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">node_indices</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">node_indices</span><span class="p">)</span>
+
+        <span class="c1"># Add edges</span>
+        <span class="n">has_weights</span> <span class="o">=</span> <span class="n">edgelist</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edgelist</span><span class="p">:</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">tgt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">node_id_map</span><span class="p">:</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+                <span class="n">tgt</span> <span class="o">=</span> <span class="n">node_id_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tgt</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">has_weights</span><span class="p">:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">weight_attr</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">2</span><span class="p">])})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">G</span></div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># NetworkX &lt;-&gt; nodes_and_links conversions</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="k">if</span> <span class="n">_has_networkx</span><span class="p">:</span>
+
+<div class="viewcode-block" id="networkx_to_nodes_and_links">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_nodes_and_links">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">networkx_to_nodes_and_links</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert NetworkX graph to nodes_and_links dict.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        graph : nx.Graph or nx.DiGraph</span>
+<span class="sd">            NetworkX graph</span>
+<span class="sd">        ctx : dict, optional</span>
+<span class="sd">            Context with optional keys:</span>
+<span class="sd">            - 'id_field': field name for node id (default: 'id')</span>
+<span class="sd">            - 'source_field': field name for edge source (default: 'source')</span>
+<span class="sd">            - 'target_field': field name for edge target (default: 'target')</span>
+<span class="sd">            - 'weight_field': field name for edge weight (default: 'weight')</span>
+<span class="sd">            - 'weight_attr': NetworkX attribute for weight (default: 'weight')</span>
+<span class="sd">            - 'include_node_attrs': whether to include node attributes (default: True)</span>
+<span class="sd">            - 'include_edge_attrs': whether to include edge attributes (default: True)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dict with 'nodes' and 'links' keys</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; G = nx.Graph()</span>
+<span class="sd">        &gt;&gt;&gt; G.add_edges_from([(0, 1), (1, 2)])</span>
+<span class="sd">        &gt;&gt;&gt; result = networkx_to_nodes_and_links(G)</span>
+<span class="sd">        &gt;&gt;&gt; len(result['nodes']) == 3</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">id_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'id_field'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">)</span>
+        <span class="n">source_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'source_field'</span><span class="p">,</span> <span class="s1">'source'</span><span class="p">)</span>
+        <span class="n">target_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'target_field'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">)</span>
+        <span class="n">weight_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'weight_field'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">)</span>
+        <span class="n">weight_attr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'weight_attr'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">)</span>
+        <span class="n">include_node_attrs</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'include_node_attrs'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">include_edge_attrs</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'include_edge_attrs'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Build nodes</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">node_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)}</span>
+            <span class="k">if</span> <span class="n">include_node_attrs</span> <span class="ow">and</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">node_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_dict</span><span class="p">)</span>
+
+        <span class="c1"># Build links</span>
+        <span class="n">links</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">source_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span>
+                <span class="n">target_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tgt</span><span class="p">),</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">include_edge_attrs</span> <span class="ow">and</span> <span class="n">data</span><span class="p">:</span>
+                <span class="c1"># Include weight specially if present</span>
+                <span class="k">if</span> <span class="n">weight_attr</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">link</span><span class="p">[</span><span class="n">weight_field</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">weight_attr</span><span class="p">]</span>
+                <span class="c1"># Include other attributes</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">weight_attr</span><span class="p">:</span>
+                        <span class="n">link</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'nodes'</span><span class="p">:</span> <span class="n">nodes</span><span class="p">,</span> <span class="s1">'links'</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="nodes_and_links_to_networkx_graph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes_and_links_to_networkx_graph</span><span class="p">(</span>
+        <span class="n">nodes_and_links</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert nodes_and_links dict to NetworkX undirected graph.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nodes_and_links : dict</span>
+<span class="sd">            Dict with 'nodes' and 'links' keys</span>
+<span class="sd">        ctx : dict, optional</span>
+<span class="sd">            Context (see networkx_to_nodes_and_links)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nx.Graph</span>
+<span class="sd">            NetworkX undirected graph</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; data = {'nodes': [{'id': '0'}, {'id': '1'}], 'links': [{'source': '0', 'target': '1'}]}</span>
+<span class="sd">        &gt;&gt;&gt; G = nodes_and_links_to_networkx_graph(data)</span>
+<span class="sd">        &gt;&gt;&gt; G.number_of_edges()</span>
+<span class="sd">        1</span>
+<span class="sd">        """</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">id_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'id_field'</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">)</span>
+        <span class="n">source_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'source_field'</span><span class="p">,</span> <span class="s1">'source'</span><span class="p">)</span>
+        <span class="n">target_field</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'target_field'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">)</span>
+
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+        <span class="c1"># Add nodes with attributes</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes_and_links</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'nodes'</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">node_id</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_field</span><span class="p">)</span>
+                <span class="c1"># Get other attributes (excluding id)</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">id_field</span><span class="p">}</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+
+        <span class="c1"># Add edges with attributes</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">nodes_and_links</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'links'</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">source_field</span><span class="p">)</span>
+                <span class="n">tgt</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">target_field</span><span class="p">)</span>
+                <span class="c1"># Get edge attributes (excluding source and target)</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">link</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">source_field</span><span class="p">,</span> <span class="n">target_field</span><span class="p">)</span>
+                <span class="p">}</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">G</span></div>
+
+
+<div class="viewcode-block" id="nodes_and_links_to_networkx_digraph">
+<a class="viewcode-back" href="../../../module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_digraph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes_and_links_to_networkx_digraph</span><span class="p">(</span>
+        <span class="n">nodes_and_links</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Convert nodes_and_links dict to NetworkX directed graph.</span>
+
+<span class="sd">        Same as nodes_and_links_to_networkx_graph but returns DiGraph.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; data = {'nodes': [{'id': '0'}, {'id': '1'}], 'links': [{'source': '0', 'target': '1'}]}</span>
+<span class="sd">        &gt;&gt;&gt; G = nodes_and_links_to_networkx_digraph(data)</span>
+<span class="sd">        &gt;&gt;&gt; G.is_directed()</span>
+<span class="sd">        True</span>
+<span class="sd">        """</span>
+        <span class="c1"># Reuse the graph conversion logic but create DiGraph</span>
+        <span class="n">G_undirected</span> <span class="o">=</span> <span class="n">nodes_and_links_to_networkx_graph</span><span class="p">(</span><span class="n">nodes_and_links</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">G_undirected</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ============================================================================</span>
+<span class="c1"># Register transformations</span>
+<span class="c1"># ============================================================================</span>
+
+<span class="k">if</span> <span class="n">_has_networkx</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">):</span>
+        <span class="c1"># NetworkX Graph (undirected) conversions</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">networkx_to_edgelist</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">,</span> <span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">edgelist_to_networkx_graph</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">networkx_to_nodes_and_links</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">nodes_and_links_to_networkx_graph</span>
+        <span class="p">)</span>
+
+        <span class="c1"># NetworkX DiGraph (directed) conversions</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'networkx_digraph'</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">networkx_to_edgelist</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">,</span> <span class="s1">'networkx_digraph'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">edgelist_to_networkx_digraph</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'networkx_digraph'</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">networkx_to_nodes_and_links</span>
+        <span class="p">)</span>
+        <span class="n">register_transformation</span><span class="p">(</span><span class="s1">'nodes_and_links'</span><span class="p">,</span> <span class="s1">'networkx_digraph'</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)(</span>
+            <span class="n">nodes_and_links_to_networkx_digraph</span>
+        <span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

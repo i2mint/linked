@@ -6,25 +6,25 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>linked &mdash; linked 0.0.5 documentation</title>
+  <title>linked &mdash; linked 0.0.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=282f96c0"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=1fd71caa"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="linked.datasrc" href="linked/datasrc.html" />
+    <link rel="next" title="linked.cast" href="linked/cast.html" />
     <link rel="prev" title="Welcome to linked’s documentation!" href="../index.html" /> 
 </head>
 
@@ -49,11 +49,31 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">linked</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">linked</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#linked.adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.convert_graph"><code class="docutils literal notranslate"><span class="pre">convert_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.epsilon_graph"><code class="docutils literal notranslate"><span class="pre">epsilon_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.graph_converter"><code class="docutils literal notranslate"><span class="pre">graph_converter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.graph_kinds"><code class="docutils literal notranslate"><span class="pre">graph_kinds()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.knn_graph"><code class="docutils literal notranslate"><span class="pre">knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">mutual_knn_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.random_graph"><code class="docutils literal notranslate"><span class="pre">random_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.reachable_from_kind"><code class="docutils literal notranslate"><span class="pre">reachable_from_kind()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked.sources_for_kind"><code class="docutils literal notranslate"><span class="pre">sources_for_kind()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="linked/cast.html">linked.cast</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/datasrc.html">linked.datasrc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/tests.html">linked.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/tests/test_cast.html">linked.tests.test_cast</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linked/util.html">linked.util</a></li>
 </ul>
@@ -85,27 +105,357 @@
   <section id="module-linked">
 <span id="linked"></span><h1>linked<a class="headerlink" href="#module-linked" title="Link to this heading"></a></h1>
 <p>Create and transform graph data.</p>
+<p>The linked package provides tools for creating and converting between various
+graph data representations. It includes:</p>
+<ul class="simple">
+<li><p>Graph construction from vectors (k-NN graphs, mutual k-NN, etc.)</p></li>
+<li><p>Mini-dot language for simple graph specification</p></li>
+<li><p>Comprehensive graph format conversion using castgraph</p></li>
+<li><p>Support for NetworkX, pandas DataFrames, adjacency matrices, edge lists, and more</p></li>
+</ul>
 <p>Examples:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">mini_dot_to_graph_jdict</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">'''</span>
 <span class="gp">... </span><span class="s1">1 -&gt; 2</span>
 <span class="gp">... </span><span class="s1">2, 3 -&gt; 5, 6, 7</span>
-<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>  
-<span class="go">{&#39;nodes&#39;: [{&#39;id&#39;: &#39;1&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;2&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;7&#39;},</span>
-<span class="go">{&#39;id&#39;: &#39;3&#39;}],</span>
-<span class="go">&#39;links&#39;: [{&#39;source&#39;: &#39;1&#39;, &#39;target&#39;: &#39;2&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;2&#39;, &#39;target&#39;: &#39;7&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;5&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;6&#39;},</span>
-<span class="go">{&#39;source&#39;: &#39;3&#39;, &#39;target&#39;: &#39;7&#39;}]}</span>
+<span class="gp">... </span><span class="s1">'''</span><span class="p">)</span>
+<span class="go">{'nodes': [{'id': '1'},</span>
+<span class="go">{'id': '2'},</span>
+<span class="go">{'id': '5'},</span>
+<span class="go">{'id': '6'},</span>
+<span class="go">{'id': '7'},</span>
+<span class="go">{'id': '3'}],</span>
+<span class="go">'links': [{'source': '1', 'target': '2'},</span>
+<span class="go">{'source': '2', 'target': '5'},</span>
+<span class="go">{'source': '2', 'target': '6'},</span>
+<span class="go">{'source': '2', 'target': '7'},</span>
+<span class="go">{'source': '3', 'target': '5'},</span>
+<span class="go">{'source': '3', 'target': '6'},</span>
+<span class="go">{'source': '3', 'target': '7'}]}</span>
 </pre></div>
 </div>
+<p>Graph conversion examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Convert edge list to nodes_and_links format</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">graph</span> <span class="ow">and</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">graph</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Convert mini-dot to edge list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">minidot</span> <span class="o">=</span> <span class="s2">"1 -&gt; 2</span><span class="se">\n</span><span class="s2">2 -&gt; 3"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">minidot</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'minidot'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.adaptive_knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">adaptive_knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/linked/datasrc/vectors.html#adaptive_knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.adaptive_knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct k-NN graph with adaptive distance scaling (UMAP-style).</p>
+<p>Uses local density estimation to adaptively scale distances, ensuring each
+point has at least ‘local_connectivity’ strong connections. This helps
+preserve local structure in varying-density regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>local_connectivity</strong> – Minimum number of strong local connections per point</p></li>
+<li><p><strong>bandwidth</strong> – Gaussian kernel bandwidth for weight computation</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 3) with adaptive weights</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.convert_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">convert_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/linked/cast.html#convert_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.convert_graph" title="Link to this definition"></a></dt>
+<dd><p>Convert a graph from one representation to another.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – The graph object to convert</p></li>
+<li><p><strong>to_kind</strong> (<em>str</em>) – The target graph kind</p></li>
+<li><p><strong>from_kind</strong> (<em>str</em><em>, </em><em>optional</em>) – The source graph kind (auto-detected if None)</p></li>
+<li><p><strong>context</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional context for the conversion (e.g., column names, field mappings)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The converted graph object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">minidot</span> <span class="o">=</span> <span class="s2">"1 -&gt; 2</span><span class="se">\n</span><span class="s2">2 -&gt; 3"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">minidot</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'nodes'</span> <span class="ow">in</span> <span class="n">graph</span> <span class="ow">and</span> <span class="s1">'links'</span> <span class="ow">in</span> <span class="n">graph</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.epsilon_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">epsilon_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/linked/datasrc/vectors.html#epsilon_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.epsilon_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct an epsilon-neighborhood graph.</p>
+<p>Connect all pairs of points within distance radius of each other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>radius</strong> – Maximum distance for neighborhood</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>approximate</strong> – Use approximate methods (not well-supported for radius queries)</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">epsilon_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.graph_converter">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">graph_converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">callable</span></span></span><a class="reference internal" href="../_modules/linked/cast.html#graph_converter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.graph_converter" title="Link to this definition"></a></dt>
+<dd><p>Get a converter function for repeated conversions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_kind</strong> (<em>str</em>) – Source graph kind</p></li>
+<li><p><strong>to_kind</strong> (<em>str</em>) – Destination graph kind</p></li>
+<li><p><strong>context</strong> (<em>dict</em><em>, </em><em>optional</em>) – Context to bake into the converter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that converts graphs from from_kind to to_kind</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_edgelist</span> <span class="o">=</span> <span class="n">graph_converter</span><span class="p">(</span><span class="s1">'minidot'</span><span class="p">,</span> <span class="s1">'edgelist'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edgelist</span> <span class="o">=</span> <span class="n">to_edgelist</span><span class="p">(</span><span class="s2">"1 -&gt; 2"</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.graph_kinds">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">graph_kinds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span></span></span><a class="reference internal" href="../_modules/linked/cast.html#graph_kinds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.graph_kinds" title="Link to this definition"></a></dt>
+<dd><p>List all registered graph kinds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Set of all registered graph kind identifiers</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>set</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kinds</span> <span class="o">=</span> <span class="n">graph_kinds</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'nodes_and_links'</span> <span class="ow">in</span> <span class="n">kinds</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/linked/datasrc/vectors.html#knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct a k-nearest neighbors graph from vectors.</p>
+<p>Each point is connected to its k nearest neighbors. Returns sparse edge list
+with optional distance weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric (euclidean, manhattan, cosine, etc.)</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>include_self</strong> – Whether to include self-loops</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors for speed (requires pynndescent)</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs (-1 for all cores)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3).
+Columns are [source, target] or [source, target, weight].</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>  <span class="c1"># source, target, weight</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.mini_dot_to_graph_jdict">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">mini_dot_to_graph_jdict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mini_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'id':</span> <span class="pre">'id',</span> <span class="pre">'links':</span> <span class="pre">'links',</span> <span class="pre">'nodes':</span> <span class="pre">'nodes',</span> <span class="pre">'source':</span> <span class="pre">'source',</span> <span class="pre">'target':</span> <span class="pre">'target'}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linked/datasrc/minidot.html#mini_dot_to_graph_jdict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.mini_dot_to_graph_jdict" title="Link to this definition"></a></dt>
+<dd><p>Make a graph json dict from a mini-dot string.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">'''</span>
+<span class="gp">... </span><span class="s1">1 -&gt; 2</span>
+<span class="gp">... </span><span class="s1">2, 3 -&gt; 5, 6, 7</span>
+<span class="gp">... </span><span class="s1">'''</span><span class="p">)</span>
+<span class="go">{'nodes': [{'id': '1'},</span>
+<span class="go">{'id': '2'},</span>
+<span class="go">{'id': '5'},</span>
+<span class="go">{'id': '6'},</span>
+<span class="go">{'id': '7'},</span>
+<span class="go">{'id': '3'}],</span>
+<span class="go">'links': [{'source': '1', 'target': '2'},</span>
+<span class="go">{'source': '2', 'target': '5'},</span>
+<span class="go">{'source': '2', 'target': '6'},</span>
+<span class="go">{'source': '2', 'target': '7'},</span>
+<span class="go">{'source': '3', 'target': '5'},</span>
+<span class="go">{'source': '3', 'target': '6'},</span>
+<span class="go">{'source': '3', 'target': '7'}]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.mutual_knn_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">mutual_knn_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'connectivity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'distance'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approximate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'mst'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nn'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/linked/datasrc/vectors.html#mutual_knn_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.mutual_knn_graph" title="Link to this definition"></a></dt>
+<dd><p>Construct a mutual k-nearest neighbors graph.</p>
+<p>An edge exists between points i and j only if i is among j’s k nearest neighbors
+AND j is among i’s k nearest neighbors. This symmetrization reduces hub effects
+and improves local structure preservation in high dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – Input data of shape (n_samples, n_features)</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors for each sample</p></li>
+<li><p><strong>metric</strong> – Distance metric</p></li>
+<li><p><strong>mode</strong> – ‘connectivity’ returns binary edges, ‘distance’ returns weighted edges</p></li>
+<li><p><strong>approximate</strong> – Use approximate nearest neighbors for speed</p></li>
+<li><p><strong>ensure_connectivity</strong> – Method to ensure graph connectivity
+- ‘none’: May result in disconnected components
+- ‘mst’: Add minimum spanning tree edges
+- ‘nn’: Connect isolated vertices to their nearest neighbor</p></li>
+<li><p><strong>n_jobs</strong> – Number of parallel jobs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.random_graph">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">random_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'erdos_renyi'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'barabasi_albert'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'watts_strogatz'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'erdos_renyi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/linked/datasrc/vectors.html#random_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.random_graph" title="Link to this definition"></a></dt>
+<dd><p>Generate a random graph according to classical random graph models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_nodes</strong> – Number of nodes in the graph</p></li>
+<li><p><strong>model</strong> – Random graph model to use
+- ‘erdos_renyi’: Each edge exists with probability p
+- ‘barabasi_albert’: Preferential attachment, add m edges per new node
+- ‘watts_strogatz’: Small-world, start with k-regular lattice, rewire with prob p</p></li>
+<li><p><strong>p</strong> – Edge probability (erdos_renyi, watts_strogatz)</p></li>
+<li><p><strong>m</strong> – Edges per node (barabasi_albert)</p></li>
+<li><p><strong>k</strong> – Initial degree (watts_strogatz)</p></li>
+<li><p><strong>weighted</strong> – If True, assign random weights to edges</p></li>
+<li><p><strong>seed</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Graph as numpy array of shape (n_edges, 2) or (n_edges, 3)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"erdos_renyi"</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.reachable_from_kind">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">reachable_from_kind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span></span></span><a class="reference internal" href="../_modules/linked/cast.html#reachable_from_kind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.reachable_from_kind" title="Link to this definition"></a></dt>
+<dd><p>Get all graph kinds reachable from a given kind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kind</strong> (<em>str</em>) – The source graph kind</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Set of reachable graph kind identifiers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reachable</span> <span class="o">=</span> <span class="n">reachable_from_kind</span><span class="p">(</span><span class="s1">'minidot'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'nodes_and_links'</span> <span class="ow">in</span> <span class="n">reachable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="linked.sources_for_kind">
+<span class="sig-prename descclassname"><span class="pre">linked.</span></span><span class="sig-name descname"><span class="pre">sources_for_kind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span></span></span><a class="reference internal" href="../_modules/linked/cast.html#sources_for_kind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#linked.sources_for_kind" title="Link to this definition"></a></dt>
+<dd><p>Get all graph kinds that can be converted to a given kind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kind</strong> (<em>str</em>) – The target graph kind</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Set of source graph kind identifiers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sources</span> <span class="o">=</span> <span class="n">sources_for_kind</span><span class="p">(</span><span class="s1">'edgelist'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -113,13 +463,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to linked’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="linked/datasrc.html" class="btn btn-neutral float-right" title="linked.datasrc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="linked/cast.html" class="btn btn-neutral float-right" title="linked.cast" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
