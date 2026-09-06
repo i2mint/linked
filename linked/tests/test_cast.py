@@ -4,9 +4,6 @@ Tests for linked.cast graph conversion system.
 
 from contextlib import suppress
 import numpy as np
-import sys
-
-sys.path.insert(0, "/home/claude")
 
 
 # Test basic imports
@@ -14,7 +11,7 @@ def test_imports():
     """Test that cast module can be imported."""
     print("Testing imports...")
     from linked import cast
-    from linked.cast import graph_transformer, convert_graph, list_graph_kinds
+    from linked.cast import graph_transformer, convert_graph, graph_kinds
 
     print("✓ Import tests passed")
 
@@ -22,9 +19,9 @@ def test_imports():
 def test_core_kinds():
     """Test that core graph kinds are registered."""
     print("\nTesting core kinds registration...")
-    from linked.cast import list_graph_kinds
+    from linked.cast import graph_kinds
 
-    kinds = list_graph_kinds()
+    kinds = graph_kinds()
     print(f"Registered kinds: {kinds}")
 
     # Core kinds should be present
@@ -139,9 +136,9 @@ def test_networkx_conversions():
 
     try:
         import networkx as nx
-        from linked.cast import convert_graph, list_graph_kinds
+        from linked.cast import convert_graph, graph_kinds
 
-        kinds = list_graph_kinds()
+        kinds = graph_kinds()
         if 'networkx_graph' not in kinds:
             print("⊘ NetworkX kinds not registered (networkx may not be installed)")
             return
@@ -174,9 +171,9 @@ def test_pandas_conversions():
 
     try:
         import pandas as pd
-        from linked.cast import convert_graph, list_graph_kinds
+        from linked.cast import convert_graph, graph_kinds
 
-        kinds = list_graph_kinds()
+        kinds = graph_kinds()
         if 'edges_dataframe' not in kinds:
             print("⊘ DataFrame kinds not registered (pandas may not be installed)")
             return
@@ -208,9 +205,9 @@ def test_pandas_conversions():
 def test_vectors_conversions():
     """Test vectors -> graph conversions."""
     print("\nTesting vectors conversions...")
-    from linked.cast import convert_graph, list_graph_kinds
+    from linked.cast import convert_graph, graph_kinds
 
-    kinds = list_graph_kinds()
+    kinds = graph_kinds()
     if 'vectors' not in kinds:
         print("⊘ Vectors kind not registered")
         return
@@ -324,9 +321,9 @@ def test_sparse_adjacency():
 
     try:
         from scipy import sparse
-        from linked.cast import convert_graph, list_graph_kinds
+        from linked.cast import convert_graph, graph_kinds
 
-        kinds = list_graph_kinds()
+        kinds = graph_kinds()
         if 'sparse_adjacency' not in kinds:
             print("⊘ Sparse adjacency kind not registered")
             return
