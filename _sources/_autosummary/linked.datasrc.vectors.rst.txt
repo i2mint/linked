@@ -1,0 +1,24 @@
+linked.datasrc.vectors
+======================
+
+.. automodule:: linked.datasrc.vectors
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      adaptive_knn_graph
+      epsilon_graph
+      knn_graph
+      mutual_knn_graph
+      random_graph
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AdaptiveKNNGraphEstimator
+      KNNGraphEstimator
+      MutualKNNGraphEstimator
+   

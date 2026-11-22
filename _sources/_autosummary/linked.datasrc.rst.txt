@@ -1,0 +1,18 @@
+linked.datasrc
+==============
+
+.. automodule:: linked.datasrc
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   adjacency
+   dataframes
+   edgelist
+   minidot
+   networkx_graphs
+   vectors

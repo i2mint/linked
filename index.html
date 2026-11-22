@@ -1,258 +1,523 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html lang="en" data-accent-color="grass" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to linked’s documentation! &mdash; linked 0.0.6 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>linked</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API reference" href="api.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="linked"/>
+    <meta name="twitter:card" content="summary"/>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=1fd71caa"></script>
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="#">
+      
+      
+      <strong>linked</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/i2mint/linked" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/linked.html">linked</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/linked.cast.html">linked.cast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/linked.datasrc.html">linked.datasrc</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.adjacency.html">linked.datasrc.adjacency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.dataframes.html">linked.datasrc.dataframes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.edgelist.html">linked.datasrc.edgelist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.minidot.html">linked.datasrc.minidot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/linked.datasrc.vectors.html">linked.datasrc.vectors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/linked.util.html">linked.util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#graph-conversion-system">Graph Conversion System</a><ul>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#supported-formats">Supported Formats</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mini-dot-to-graph-jdict">mini_dot_to_graph_jdict</a></li>
+<li><a class="reference internal" href="#linked-datasrc-vectors">linked.datasrc.vectors</a><ul>
+<li><a class="reference internal" href="#id1">Quick Start</a></li>
+<li><a class="reference internal" href="#graph-construction-methods">Graph Construction Methods</a><ul>
+<li><a class="reference internal" href="#k-nearest-neighbors-graph">1. k-Nearest Neighbors Graph</a></li>
+<li><a class="reference internal" href="#mutual-k-nearest-neighbors-graph">2. Mutual k-Nearest Neighbors Graph</a></li>
+<li><a class="reference internal" href="#epsilon-neighborhood-graph">3. Epsilon-Neighborhood Graph</a></li>
+<li><a class="reference internal" href="#adaptive-k-nn-graph">4. Adaptive k-NN Graph</a></li>
+<li><a class="reference internal" href="#random-graph-generation">5. Random Graph Generation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sklearn-style-estimators">Sklearn-Style Estimators</a></li>
+<li><a class="reference internal" href="#distance-metrics">Distance Metrics</a></li>
+<li><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li><a class="reference internal" href="#approximate-vs-exact">Approximate vs. Exact</a></li>
+<li><a class="reference internal" href="#parallel-processing">Parallel Processing</a></li>
+<li><a class="reference internal" href="#memory-management">Memory Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#output-format">Output Format</a></li>
+<li><a class="reference internal" href="#integration-with-visualization">Integration with Visualization</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="#"><span itemprop="name">linked</span></a>
+        <meta itemprop="position" content="1" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <!-- generated by epythet -->
+<section id="linked">
+<h1>linked<a class="headerlink" href="#linked" title="Link to this heading">#</a></h1>
+<p>Create and transform graphs</p>
+<p>To install:	<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">linked</span></code></p>
+<section id="graph-conversion-system">
+<h2>Graph Conversion System<a class="headerlink" href="#graph-conversion-system" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">linked.cast</span></code> module provides a unified system for converting between different graph data representations. It automatically discovers the shortest conversion path between any two formats.</p>
+<section id="quick-start">
+<h3>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_graph</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Convert edge list to nodes_and_links format</span>
+</span><span data-line="5"><span class="n">edgelist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</span><span data-line="6"><span class="n">graph</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">edgelist</span><span class="p">,</span> <span class="s1">'nodes_and_links'</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># Convert mini-dot to NetworkX (multi-hop conversion)</span>
+</span><span data-line="9"><span class="n">minidot</span> <span class="o">=</span> <span class="s2">"1 -&gt; 2</span><span class="se">\n</span><span class="s2">2 -&gt; 3"</span>
+</span><span data-line="10"><span class="n">nx_graph</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span><span class="n">minidot</span><span class="p">,</span> <span class="s1">'networkx_graph'</span><span class="p">,</span> <span class="n">from_kind</span><span class="o">=</span><span class="s1">'minidot'</span><span class="p">)</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="c1"># Convert vectors to graph using k-NN</span>
+</span><span data-line="13"><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span><span data-line="14"><span class="n">knn_graph</span> <span class="o">=</span> <span class="n">convert_graph</span><span class="p">(</span>
+</span><span data-line="15">    <span class="n">vectors</span><span class="p">,</span> 
+</span><span data-line="16">    <span class="s1">'weighted_edgelist'</span><span class="p">,</span>
+</span><span data-line="17">    <span class="n">from_kind</span><span class="o">=</span><span class="s1">'vectors'</span><span class="p">,</span>
+</span><span data-line="18">    <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">'n_neighbors'</span><span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
+</span><span data-line="19"><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="supported-formats">
+<h3>Supported Formats<a class="headerlink" href="#supported-formats" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nodes_and_links</span></code></strong>: JSON-style dict (D3.js compatible)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">edgelist</span></code></strong>: numpy array (n_edges, 2)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">weighted_edgelist</span></code></strong>: numpy array (n_edges, 3)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">minidot</span></code></strong>: Simple text format</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">adjacency_matrix</span></code></strong>: Dense numpy array</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sparse_adjacency</span></code></strong>: scipy sparse matrix</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">adjacency_list</span></code></strong>: Dict of neighbors</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">networkx_graph</span></code></strong>: NetworkX Graph</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">networkx_digraph</span></code></strong>: NetworkX DiGraph</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">edges_dataframe</span></code></strong>: pandas DataFrame</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">graph_dataframes</span></code></strong>: Dict with edges/nodes DataFrames</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vectors</span></code></strong>: numpy array → graph via k-NN</p></li>
+</ul>
+</section>
+</section>
+<section id="mini-dot-to-graph-jdict">
+<span id="mini_dot_to_graph_jdict"></span><h2>mini_dot_to_graph_jdict<a class="headerlink" href="#mini-dot-to-graph-jdict" title="Link to this heading">#</a></h2>
+<p>Make graphs from the (mini) dot language.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">mini_dot_to_graph_jdict</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">mini_dot_to_graph_jdict</span><span class="p">(</span><span class="s1">'''</span>
+</span><span data-line="3"><span class="gp">... </span><span class="s1">1 -&gt; 2</span>
+</span><span data-line="4"><span class="gp">... </span><span class="s1">2, 3 -&gt; 5, 6, 7</span>
+</span><span data-line="5"><span class="gp">... </span><span class="s1">'''</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">{'nodes': [{'id': '1'},</span>
+</span><span data-line="7"><span class="go">{'id': '2'},</span>
+</span><span data-line="8"><span class="go">{'id': '5'},</span>
+</span><span data-line="9"><span class="go">{'id': '6'},</span>
+</span><span data-line="10"><span class="go">{'id': '7'},</span>
+</span><span data-line="11"><span class="go">{'id': '3'}],</span>
+</span><span data-line="12"><span class="go">'links': [{'source': '1', 'target': '2'},</span>
+</span><span data-line="13"><span class="go">{'source': '2', 'target': '5'},</span>
+</span><span data-line="14"><span class="go">{'source': '2', 'target': '6'},</span>
+</span><span data-line="15"><span class="go">{'source': '2', 'target': '7'},</span>
+</span><span data-line="16"><span class="go">{'source': '3', 'target': '5'},</span>
+</span><span data-line="17"><span class="go">{'source': '3', 'target': '6'},</span>
+</span><span data-line="18"><span class="go">{'source': '3', 'target': '7'}]}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="linked-datasrc-vectors">
+<span id="linkeddatasrcvectors"></span><h2>linked.datasrc.vectors<a class="headerlink" href="#linked-datasrc-vectors" title="Link to this heading">#</a></h2>
+<p>Graph construction from high-dimensional vector data for network analysis and visualization.</p>
+<p>This module provides tools to convert point/vector data into graph data (edge lists) suitable for network analysis, visualization, and dimensionality reduction. It focuses on sparse graph construction from large datasets (50K-500K points) with high dimensionality (up to 3000+ features).</p>
+<section id="id1">
+<span id="quick-start-1"></span><h3>Quick Start<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">knn_graph</span><span class="p">,</span> <span class="n">mutual_knn_graph</span><span class="p">,</span> <span class="n">adaptive_knn_graph</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Generate sample data</span>
+</span><span data-line="5"><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>  <span class="c1"># 1000 points, 128 dimensions</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># Build a k-NN graph</span>
+</span><span data-line="8"><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (15000, 3) - source, target, weight</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="c1"># Build a mutual k-NN graph (more robust for high dimensions)</span>
+</span><span data-line="12"><span class="n">graph</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ensure_connectivity</span><span class="o">=</span><span class="s2">"mst"</span><span class="p">)</span>
+</span><span data-line="13">
+</span><span data-line="14"><span class="c1"># Build an adaptive k-NN graph (UMAP-style)</span>
+</span><span data-line="15"><span class="n">graph</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">local_connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>See more in <a class="reference internal" href="#"><span class="xref myst">misc/CAST_README.md</span></a>.</p>
+</section>
+<section id="graph-construction-methods">
+<h3>Graph Construction Methods<a class="headerlink" href="#graph-construction-methods" title="Link to this heading">#</a></h3>
+<section id="k-nearest-neighbors-graph">
+<h4>1. k-Nearest Neighbors Graph<a class="headerlink" href="#k-nearest-neighbors-graph" title="Link to this heading">#</a></h4>
+<p>Connects each point to its k nearest neighbors.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">knn_graph</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">vectors</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>           <span class="c1"># Number of neighbors per point</span>
+</span><span data-line="6">    <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span><span class="p">,</span>       <span class="c1"># Distance metric</span>
+</span><span data-line="7">    <span class="n">mode</span><span class="o">=</span><span class="s2">"distance"</span><span class="p">,</span>          <span class="c1"># "distance" or "connectivity"</span>
+</span><span data-line="8">    <span class="n">include_self</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>       <span class="c1"># Include self-loops</span>
+</span><span data-line="9">    <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># Use approximate nearest neighbors</span>
+</span><span data-line="10">    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>                 <span class="c1"># Parallel processing</span>
+</span><span data-line="11"><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>Output Format</strong>: Array of shape (n_edges, 3) with columns [source, target, weight] or (n_edges, 2) for connectivity mode.</p>
+</section>
+<section id="mutual-k-nearest-neighbors-graph">
+<h4>2. Mutual k-Nearest Neighbors Graph<a class="headerlink" href="#mutual-k-nearest-neighbors-graph" title="Link to this heading">#</a></h4>
+<p>More robust for high-dimensional data. An edge exists only if both points are in each other’s k-NN.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">mutual_knn_graph</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">graph</span> <span class="o">=</span> <span class="n">mutual_knn_graph</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">vectors</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">mode</span><span class="o">=</span><span class="s2">"distance"</span><span class="p">,</span>
+</span><span data-line="8">    <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="9">    <span class="n">ensure_connectivity</span><span class="o">=</span><span class="s2">"mst"</span><span class="p">,</span>  <span class="c1"># "none", "mst", or "nn"</span>
+</span><span data-line="10">    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+</span><span data-line="11"><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>Connectivity Options</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>: May result in disconnected components</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;mst&quot;</span></code>: Add minimum spanning tree edges to ensure connectivity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;nn&quot;</span></code>: Connect isolated vertices to their nearest neighbor</p></li>
+</ul>
+</section>
+<section id="epsilon-neighborhood-graph">
+<h4>3. Epsilon-Neighborhood Graph<a class="headerlink" href="#epsilon-neighborhood-graph" title="Link to this heading">#</a></h4>
+<p>Connects all pairs of points within a radius.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">epsilon_graph</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">graph</span> <span class="o">=</span> <span class="n">epsilon_graph</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">vectors</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>              <span class="c1"># Maximum distance for connections</span>
+</span><span data-line="6">    <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">mode</span><span class="o">=</span><span class="s2">"distance"</span>
+</span><span data-line="8"><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="adaptive-k-nn-graph">
+<h4>4. Adaptive k-NN Graph<a class="headerlink" href="#adaptive-k-nn-graph" title="Link to this heading">#</a></h4>
+<p>Uses local density scaling (UMAP-style) to adaptively weight edges based on local structure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">adaptive_knn_graph</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">graph</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">vectors</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">local_connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>    <span class="c1"># Min strong connections per point</span>
+</span><span data-line="8">    <span class="n">bandwidth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>           <span class="c1"># Gaussian kernel bandwidth</span>
+</span><span data-line="9">    <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span>
+</span><span data-line="10"><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="random-graph-generation">
+<h4>5. Random Graph Generation<a class="headerlink" href="#random-graph-generation" title="Link to this heading">#</a></h4>
+<p>Generate synthetic graphs for testing and benchmarking.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">random_graph</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Erdos-Renyi: random edges with probability p</span>
+</span><span data-line="4"><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"erdos_renyi"</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Barabasi-Albert: preferential attachment</span>
+</span><span data-line="7"><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"barabasi_albert"</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="c1"># Watts-Strogatz: small-world network</span>
+</span><span data-line="10"><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"watts_strogatz"</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="c1"># Add random weights</span>
+</span><span data-line="13"><span class="n">graph</span> <span class="o">=</span> <span class="n">random_graph</span><span class="p">(</span><span class="n">n_nodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"erdos_renyi"</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="sklearn-style-estimators">
+<h3>Sklearn-Style Estimators<a class="headerlink" href="#sklearn-style-estimators" title="Link to this heading">#</a></h3>
+<p>For integration with sklearn pipelines:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNNGraphEstimator</span><span class="p">,</span> <span class="n">MutualKNNGraphEstimator</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Create estimator</span>
+</span><span data-line="4"><span class="n">estimator</span> <span class="o">=</span> <span class="n">KNNGraphEstimator</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Fit and transform</span>
+</span><span data-line="7"><span class="n">graph</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Available estimators:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">KNNGraphEstimator</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MutualKNNGraphEstimator</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AdaptiveKNNGraphEstimator</span></code></p></li>
+</ul>
+</section>
+<section id="distance-metrics">
+<h3>Distance Metrics<a class="headerlink" href="#distance-metrics" title="Link to this heading">#</a></h3>
+<p>All functions support various distance metrics via sklearn:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;euclidean&quot;</span></code> (default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;manhattan&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;cosine&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;minkowski&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;chebyshev&quot;</span></code></p></li>
+<li><p>And many more from <code class="docutils literal notranslate"><span class="pre">scipy.spatial.distance</span></code></p></li>
+</ul>
+</section>
+<section id="performance-considerations">
+<h3>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading">#</a></h3>
+<section id="approximate-vs-exact">
+<h4>Approximate vs. Exact<a class="headerlink" href="#approximate-vs-exact" title="Link to this heading">#</a></h4>
+<p>For large datasets, use <code class="docutils literal notranslate"><span class="pre">approximate=True</span></code> to enable approximate nearest neighbors via pynndescent:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Fast approximate search</span>
+</span><span data-line="2"><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Slower exact search</span>
+</span><span data-line="5"><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">approximate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Approximate methods are typically 10-100x faster with 90-99% accuracy.</p>
+</section>
+<section id="parallel-processing">
+<h4>Parallel Processing<a class="headerlink" href="#parallel-processing" title="Link to this heading">#</a></h4>
+<p>Use <code class="docutils literal notranslate"><span class="pre">n_jobs=-1</span></code> to utilize all CPU cores:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">graph</span> <span class="o">=</span> <span class="n">knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="memory-management">
+<h4>Memory Management<a class="headerlink" href="#memory-management" title="Link to this heading">#</a></h4>
+<p>For very large datasets (&gt;500K points), consider:</p>
+<ol class="arabic simple">
+<li><p>Using sparse output formats</p></li>
+<li><p>Processing in batches</p></li>
+<li><p>Using approximate methods</p></li>
+<li><p>Reducing <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code></p></li>
+</ol>
+</section>
+</section>
+<section id="output-format">
+<h3>Output Format<a class="headerlink" href="#output-format" title="Link to this heading">#</a></h3>
+<p>All graph construction functions return numpy arrays:</p>
+<p><strong>With weights</strong> (mode=”distance”):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.342</span><span class="p">],</span>    <span class="c1"># source=0, target=5, weight=0.342</span>
+</span><span data-line="2">       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mf">0.521</span><span class="p">],</span>    <span class="c1"># source=0, target=8, weight=0.521</span>
+</span><span data-line="3">       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.234</span><span class="p">],</span>    <span class="c1"># source=1, target=3, weight=0.234</span>
+</span><span data-line="4">       <span class="o">...</span><span class="p">])</span>
+</span></pre></div>
+</div>
+<p><strong>Without weights</strong> (mode=”connectivity”):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>    <span class="c1"># source=0, target=5</span>
+</span><span data-line="2">       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>    <span class="c1"># source=0, target=8</span>
+</span><span data-line="3">       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>    <span class="c1"># source=1, target=3</span>
+</span><span data-line="4">       <span class="o">...</span><span class="p">])</span>
+</span></pre></div>
+</div>
+</section>
+<section id="integration-with-visualization">
+<h3>Integration with Visualization<a class="headerlink" href="#integration-with-visualization" title="Link to this heading">#</a></h3>
+<p>Example: Use with force-directed layout:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">linked</span><span class="w"> </span><span class="kn">import</span> <span class="n">adaptive_knn_graph</span>
+</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+</span><span data-line="4"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Build graph</span>
+</span><span data-line="7"><span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span><span data-line="8"><span class="n">edges</span> <span class="o">=</span> <span class="n">adaptive_knn_graph</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Convert to NetworkX</span>
+</span><span data-line="11"><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+</span><span data-line="12"><span class="k">for</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+</span><span data-line="13">    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="c1"># Layout and visualize</span>
+</span><span data-line="16"><span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</span><span data-line="17"><span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span data-line="18"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></pre></div>
+</div>
+</section>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>High-dimensional data</strong>: Use <code class="docutils literal notranslate"><span class="pre">mutual_knn_graph</span></code> or <code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph</span></code> for better structure preservation</p></li>
+<li><p><strong>Sparse graphs</strong>: Start with smaller <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> (5-15) and increase if needed</p></li>
+<li><p><strong>Connectivity</strong>: Use <code class="docutils literal notranslate"><span class="pre">ensure_connectivity=&quot;mst&quot;</span></code> for visualization tasks</p></li>
+<li><p><strong>Large datasets</strong>: Enable <code class="docutils literal notranslate"><span class="pre">approximate=True</span></code> and set appropriate <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code></p></li>
+<li><p><strong>Distance metrics</strong>: Choose based on your data:</p>
+<ul class="simple">
+<li><p>Euclidean: General-purpose, works well for normalized data</p></li>
+<li><p>Cosine: Good for high-dimensional sparse data (e.g., text embeddings)</p></li>
+<li><p>Manhattan: Robust to outliers</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
+<p>The algorithms implemented are based on recent research:</p>
+<ul class="simple">
+<li><p>McInnes et al. (2018): UMAP - Uniform Manifold Approximation and Projection</p></li>
+<li><p>Tang et al. (2016): LargeVis - Visualizing Large-scale High-dimensional Data</p></li>
+<li><p>Jarvis &amp; Patrick (1973): Clustering Using a Similarity Measure Based on Shared Near Neighbors</p></li>
+<li><p>Belkin &amp; Niyogi (2003): Laplacian Eigenmaps</p></li>
+</ul>
+<p>For more details, see the included research document.</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="linked.md">linked.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 19:25 UTC from <a href="https://github.com/i2mint/linked/commit/7515f8161526d60a30a4ceb3d533d0719c5e4ad0">7515f81</a> (main) · linked 0.0.7 · <a href="about-this-build.html">about this build</a></p>
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-next">
+    <a href="api.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">API reference</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/i2mint/linked" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="_static/documentation_options.js?v=bbaf98b3"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="linked" href="module_docs/linked.html" /> 
-</head>
-
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="#" class="icon icon-home">
-            linked
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked.html">linked</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/cast.html">linked.cast</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc.html">linked.datasrc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests.html">linked.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/util.html">linked.util</a></li>
-</ul>
-
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">linked</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to linked’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-linked-s-documentation">
-<h1>Welcome to linked’s documentation!<a class="headerlink" href="#welcome-to-linked-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked.html">linked</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.convert_graph"><code class="docutils literal notranslate"><span class="pre">convert_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.epsilon_graph"><code class="docutils literal notranslate"><span class="pre">epsilon_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.graph_converter"><code class="docutils literal notranslate"><span class="pre">graph_converter()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.graph_kinds"><code class="docutils literal notranslate"><span class="pre">graph_kinds()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.knn_graph"><code class="docutils literal notranslate"><span class="pre">knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">mutual_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.random_graph"><code class="docutils literal notranslate"><span class="pre">random_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.reachable_from_kind"><code class="docutils literal notranslate"><span class="pre">reachable_from_kind()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked.html#linked.sources_for_kind"><code class="docutils literal notranslate"><span class="pre">sources_for_kind()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/cast.html">linked.cast</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#core-graph-kinds">Core graph kinds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#design">Design</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#example-usage">Example usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.convert_graph"><code class="docutils literal notranslate"><span class="pre">convert_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.graph_converter"><code class="docutils literal notranslate"><span class="pre">graph_converter()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.graph_kinds"><code class="docutils literal notranslate"><span class="pre">graph_kinds()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.reachable_from_kind"><code class="docutils literal notranslate"><span class="pre">reachable_from_kind()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.register_kind"><code class="docutils literal notranslate"><span class="pre">register_kind()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.register_transformation"><code class="docutils literal notranslate"><span class="pre">register_transformation()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/cast.html#linked.cast.sources_for_kind"><code class="docutils literal notranslate"><span class="pre">sources_for_kind()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc.html">linked.datasrc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html">linked.datasrc.adjacency</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#kinds-defined-here">Kinds defined here</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#conversions">Conversions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_list_to_edgelist"><code class="docutils literal notranslate"><span class="pre">adjacency_list_to_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_matrix_to_edgelist"><code class="docutils literal notranslate"><span class="pre">adjacency_matrix_to_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.adjacency_matrix_to_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">adjacency_matrix_to_sparse_adjacency()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_adjacency_list"><code class="docutils literal notranslate"><span class="pre">edgelist_to_adjacency_list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_adjacency_matrix"><code class="docutils literal notranslate"><span class="pre">edgelist_to_adjacency_matrix()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.edgelist_to_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">edgelist_to_sparse_adjacency()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.sparse_adjacency_to_adjacency_matrix"><code class="docutils literal notranslate"><span class="pre">sparse_adjacency_to_adjacency_matrix()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/adjacency.html#linked.datasrc.adjacency.sparse_adjacency_to_edgelist"><code class="docutils literal notranslate"><span class="pre">sparse_adjacency_to_edgelist()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html">linked.datasrc.dataframes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#kinds-defined-here">Kinds defined here</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#conversions">Conversions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edgelist_to_edges_dataframe"><code class="docutils literal notranslate"><span class="pre">edgelist_to_edges_dataframe()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edges_dataframe_to_edgelist"><code class="docutils literal notranslate"><span class="pre">edges_dataframe_to_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.edges_dataframe_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">edges_dataframe_to_nodes_and_links()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.graph_dataframes_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">graph_dataframes_to_nodes_and_links()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.nodes_and_links_to_edges_dataframe"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_edges_dataframe()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/dataframes.html#linked.datasrc.dataframes.nodes_and_links_to_graph_dataframes"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_graph_dataframes()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html">linked.datasrc.edgelist</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#kinds-defined-here">Kinds defined here</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#conversions">Conversions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.edgelist_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">edgelist_to_nodes_and_links()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.edgelist_to_weighted_edgelist"><code class="docutils literal notranslate"><span class="pre">edgelist_to_weighted_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.nodes_and_links_to_edgelist"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/edgelist.html#linked.datasrc.edgelist.weighted_edgelist_to_edgelist"><code class="docutils literal notranslate"><span class="pre">weighted_edgelist_to_edgelist()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html">linked.datasrc.minidot</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html#linked.datasrc.minidot.extract_nodes"><code class="docutils literal notranslate"><span class="pre">extract_nodes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/minidot.html#linked.datasrc.minidot.mini_dot_to_graph_jdict"><code class="docutils literal notranslate"><span class="pre">mini_dot_to_graph_jdict()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html">linked.datasrc.networkx_graphs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#kinds-defined-here">Kinds defined here</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#conversions">Conversions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_digraph"><code class="docutils literal notranslate"><span class="pre">edgelist_to_networkx_digraph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.edgelist_to_networkx_graph"><code class="docutils literal notranslate"><span class="pre">edgelist_to_networkx_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_edgelist"><code class="docutils literal notranslate"><span class="pre">networkx_to_edgelist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.networkx_to_nodes_and_links"><code class="docutils literal notranslate"><span class="pre">networkx_to_nodes_and_links()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_digraph"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_networkx_digraph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/networkx_graphs.html#linked.datasrc.networkx_graphs.nodes_and_links_to_networkx_graph"><code class="docutils literal notranslate"><span class="pre">nodes_and_links_to_networkx_graph()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html">linked.datasrc.vectors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.AdaptiveKNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">AdaptiveKNNGraphEstimator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.KNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">KNNGraphEstimator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.MutualKNNGraphEstimator"><code class="docutils literal notranslate"><span class="pre">MutualKNNGraphEstimator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">adaptive_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.epsilon_graph"><code class="docutils literal notranslate"><span class="pre">epsilon_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.knn_graph"><code class="docutils literal notranslate"><span class="pre">knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">mutual_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/datasrc/vectors.html#linked.datasrc.vectors.random_graph"><code class="docutils literal notranslate"><span class="pre">random_graph()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests.html">linked.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_cast.html">linked.tests.test_cast</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_adjacency_conversions"><code class="docutils literal notranslate"><span class="pre">test_adjacency_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_auto_detection"><code class="docutils literal notranslate"><span class="pre">test_auto_detection()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_context_parameters"><code class="docutils literal notranslate"><span class="pre">test_context_parameters()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_core_kinds"><code class="docutils literal notranslate"><span class="pre">test_core_kinds()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_edgelist_conversions"><code class="docutils literal notranslate"><span class="pre">test_edgelist_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_imports"><code class="docutils literal notranslate"><span class="pre">test_imports()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_minidot_conversions"><code class="docutils literal notranslate"><span class="pre">test_minidot_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_multi_hop_conversion"><code class="docutils literal notranslate"><span class="pre">test_multi_hop_conversion()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_networkx_conversions"><code class="docutils literal notranslate"><span class="pre">test_networkx_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_pandas_conversions"><code class="docutils literal notranslate"><span class="pre">test_pandas_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_reachability"><code class="docutils literal notranslate"><span class="pre">test_reachability()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_round_trip_conversions"><code class="docutils literal notranslate"><span class="pre">test_round_trip_conversions()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_sparse_adjacency"><code class="docutils literal notranslate"><span class="pre">test_sparse_adjacency()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_cast.html#linked.tests.test_cast.test_vectors_conversions"><code class="docutils literal notranslate"><span class="pre">test_vectors_conversions()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_import_hygiene.html">linked.tests.test_import_hygiene</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html">linked.tests.test_vectors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_adaptive_knn_graph"><code class="docutils literal notranslate"><span class="pre">test_adaptive_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_edge_format"><code class="docutils literal notranslate"><span class="pre">test_edge_format()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_epsilon_graph"><code class="docutils literal notranslate"><span class="pre">test_epsilon_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_estimators"><code class="docutils literal notranslate"><span class="pre">test_estimators()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_knn_graph"><code class="docutils literal notranslate"><span class="pre">test_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_mutual_knn_graph"><code class="docutils literal notranslate"><span class="pre">test_mutual_knn_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/linked/tests/test_vectors.html#linked.tests.test_vectors.test_random_graph"><code class="docutils literal notranslate"><span class="pre">test_random_graph()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/linked/util.html">linked.util</a></li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.0.6</p>
-<p>Last change: Sep 06, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/linked.html" class="btn btn-neutral float-right" title="linked" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+      <script src="_static/copybutton.js?v=fd10adb8"></script>
+      <script src="_static/shibuya.js?v=50760d75"></script></body>
 </html>

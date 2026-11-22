@@ -1,0 +1,12 @@
+linked.util
+===========
+
+.. automodule:: linked.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      ordered_unique
+   

@@ -1,0 +1,21 @@
+# linked
+
+> Create and transform graphs
+
+
+## Pages in this subsection
+
+- [linked](linked.html.md): Create and transform graph data.
+- [linked.cast](linked.cast.html.md): Graph representation conversion system using castgraph.
+- [linked.datasrc](linked.datasrc.html.md): Utils to generate graph data from properties and mini-languages.
+- [linked.datasrc.adjacency](linked.datasrc.adjacency.html.md): Adjacency matrix and adjacency list graph representations.
+- [linked.datasrc.dataframes](linked.datasrc.dataframes.html.md): Pandas DataFrame graph representations and conversions.
+- [linked.datasrc.edgelist](linked.datasrc.edgelist.html.md): Edge list graph representations and conversions.
+- [linked.datasrc.minidot](linked.datasrc.minidot.html.md): mini-dot: A very simple mini-language resembling graphviz dot
+- [linked.datasrc.networkx_graphs](linked.datasrc.networkx_graphs.html.md): NetworkX graph representations and conversions.
+- [linked.datasrc.vectors](linked.datasrc.vectors.html.md): Graph construction from high-dimensional vector data.
+- [linked.util](linked.util.html.md): | &#96;ordered_unique&#96;(iterable)   |    |
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

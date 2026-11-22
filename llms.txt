@@ -1,0 +1,28 @@
+# linked
+
+> Create and transform graphs
+
+
+## Pages
+
+- [linked](index.html.md): Create and transform graphs
+- [API reference](api.html.md): | &#96;linked&#96;   | Create and transform graph data.   |
+- [linked](_autosummary/linked.html.md): Create and transform graph data.
+- [linked.cast](_autosummary/linked.cast.html.md): Graph representation conversion system using castgraph.
+- [linked.datasrc](_autosummary/linked.datasrc.html.md): Utils to generate graph data from properties and mini-languages.
+- [linked.datasrc.adjacency](_autosummary/linked.datasrc.adjacency.html.md): Adjacency matrix and adjacency list graph representations.
+- [linked.datasrc.dataframes](_autosummary/linked.datasrc.dataframes.html.md): Pandas DataFrame graph representations and conversions.
+- [linked.datasrc.edgelist](_autosummary/linked.datasrc.edgelist.html.md): Edge list graph representations and conversions.
+- [linked.datasrc.minidot](_autosummary/linked.datasrc.minidot.html.md): mini-dot: A very simple mini-language resembling graphviz dot
+- [linked.datasrc.networkx_graphs](_autosummary/linked.datasrc.networkx_graphs.html.md): NetworkX graph representations and conversions.
+- [linked.datasrc.vectors](_autosummary/linked.datasrc.vectors.html.md): Graph construction from high-dimensional vector data.
+- [linked.util](_autosummary/linked.util.html.md): | &#96;ordered_unique&#96;(iterable)   |    |
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 19:25 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+
+## Optional
+
+- [linked.md](linked.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

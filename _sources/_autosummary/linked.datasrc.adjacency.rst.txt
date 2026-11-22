@@ -1,0 +1,19 @@
+linked.datasrc.adjacency
+========================
+
+.. automodule:: linked.datasrc.adjacency
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      adjacency_list_to_edgelist
+      adjacency_matrix_to_edgelist
+      adjacency_matrix_to_sparse_adjacency
+      edgelist_to_adjacency_list
+      edgelist_to_adjacency_matrix
+      edgelist_to_sparse_adjacency
+      sparse_adjacency_to_adjacency_matrix
+      sparse_adjacency_to_edgelist
+   

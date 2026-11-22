@@ -1,0 +1,18 @@
+linked.cast
+===========
+
+.. automodule:: linked.cast
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      convert_graph
+      graph_converter
+      graph_kinds
+      reachable_from_kind
+      sources_for_kind
+      register_kind
+      register_transformation
+   

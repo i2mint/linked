@@ -1,4 +1,0 @@
-linked.tests.test_cast
-======================
-.. automodule:: linked.tests.test_cast
-   :members:

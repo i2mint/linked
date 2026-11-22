@@ -1,4 +1,0 @@
-linked.datasrc.dataframes
-=========================
-.. automodule:: linked.datasrc.dataframes
-   :members:

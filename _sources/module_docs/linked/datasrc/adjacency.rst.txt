@@ -1,4 +1,0 @@
-linked.datasrc.adjacency
-========================
-.. automodule:: linked.datasrc.adjacency
-   :members:

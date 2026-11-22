@@ -1,4 +1,0 @@
-linked.datasrc
-==============
-.. automodule:: linked.datasrc
-   :members:

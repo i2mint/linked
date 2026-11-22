@@ -1,4 +1,0 @@
-linked.datasrc.minidot
-======================
-.. automodule:: linked.datasrc.minidot
-   :members:

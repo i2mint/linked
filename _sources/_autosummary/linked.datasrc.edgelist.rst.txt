@@ -1,0 +1,15 @@
+linked.datasrc.edgelist
+=======================
+
+.. automodule:: linked.datasrc.edgelist
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      edgelist_to_nodes_and_links
+      edgelist_to_weighted_edgelist
+      nodes_and_links_to_edgelist
+      weighted_edgelist_to_edgelist
+   

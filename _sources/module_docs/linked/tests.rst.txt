@@ -1,4 +1,0 @@
-linked.tests
-============
-.. automodule:: linked.tests
-   :members:

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-11-22T19:25:26Z",
+  "package": {
+    "name": "linked",
+    "version": "0.0.7",
+    "display_name": "linked",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "7515f8161526d60a30a4ceb3d533d0719c5e4ad0",
+    "short_commit": "7515f81",
+    "branch": "main",
+    "tags": [],
+    "dirty": false,
+    "remote_url": "https://github.com/i2mint/linked",
+    "commit_url": "https://github.com/i2mint/linked/commit/7515f8161526d60a30a4ceb3d533d0719c5e4ad0",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "i2mint/linked",
+    "sha": "7515f8161526d60a30a4ceb3d533d0719c5e4ad0",
+    "sha_in_history": true,
+    "ref": "refs/heads/main",
+    "ref_name": "main",
+    "run_id": "45060330985",
+    "run_url": "https://github.com/i2mint/linked/actions/runs/45060330985",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.23",
+    "sphinx": "9.1.1",
+    "docutils": "0.22.4",
+    "python": "3.12.16"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "shibuya",
+    "accent": "#23691d",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 10,
+    "objects_documented": 55
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.0.7",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/i2mint/linked && cd linked\ngit checkout 7515f8161526d60a30a4ceb3d533d0719c5e4ad0\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

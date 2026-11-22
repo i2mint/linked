@@ -1,0 +1,31 @@
+﻿linked
+======
+
+.. automodule:: linked
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      mini_dot_to_graph_jdict
+      knn_graph
+      mutual_knn_graph
+      adaptive_knn_graph
+      epsilon_graph
+      random_graph
+      convert_graph
+      graph_converter
+      graph_kinds
+      reachable_from_kind
+      sources_for_kind
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   cast
+   datasrc
+   util

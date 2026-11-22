@@ -1,0 +1,14 @@
+linked.datasrc.minidot
+======================
+
+.. automodule:: linked.datasrc.minidot
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      iterize
+      mini_dot_to_graph_jdict
+      source_target_pairs_to_graph_jdict
+   
